@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --maleja: #f00072;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-maleja-canvas font-sans text-ink antialiased;
+    font-feature-settings: "ss01", "kern";
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    @apply bg-maleja text-white;
+  }
+  h1, h2, h3, .font-serif {
+    font-optical-sizing: auto;
+  }
+  :focus-visible {
+    outline: 2px solid rgba(240, 0, 114, 0.45);
+    outline-offset: 2px;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer components {
+  .container-lux {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10;
+  }
+  .eyebrow {
+    @apply font-sans text-[11px] font-medium uppercase tracking-luxe text-maleja;
+  }
+  .heading-xl {
+    @apply font-serif text-[40px] font-medium leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl;
+  }
+  .heading-lg {
+    @apply font-serif text-3xl font-medium leading-tight tracking-tight sm:text-4xl lg:text-5xl;
+  }
+  .card-lux {
+    @apply rounded-3xl border border-maleja-pastel/40 bg-white shadow-card;
+  }
+  .link-underline {
+    @apply relative after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-lux hover:after:origin-left hover:after:scale-x-100;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
