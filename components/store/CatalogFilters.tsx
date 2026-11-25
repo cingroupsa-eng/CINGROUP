@@ -151,7 +151,7 @@ export function CatalogFilters({ options, total }: { options: Options; total: nu
     <>
       {/* Barra superior */}
       <div className="flex items-center justify-between gap-3 border-b border-maleja-pastel/40 pb-4">
-        <p className={cn("text-sm text-ink-soft transition-opacity", pending && "opacity-50")}>
+        <p className={cn("whitespace-nowrap text-sm text-ink-soft transition-opacity", pending && "opacity-50")}>
           {total} {total === 1 ? "prenda" : "prendas"}
         </p>
         <div className="flex items-center gap-2">

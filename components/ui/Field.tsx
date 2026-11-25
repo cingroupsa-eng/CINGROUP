@@ -100,7 +100,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSel
         className={inputStyles(
           invalid,
           cn(
-            "appearance-none bg-[length:16px] bg-[right_14px_center] bg-no-repeat pr-10",
+            "appearance-none bg-[length:16px] bg-[position:right_14px_center] bg-no-repeat pr-10",
             "bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B7480' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")]",
             className
           )
