@@ -24,7 +24,7 @@ export function CategoryRail({ categories }: { categories: Category[] }) {
           <Link
             href={`/categoria/${c.slug}`}
             className={cn(
-              "group relative flex aspect-[3/4] flex-col justify-between overflow-hidden rounded-[22px] bg-gradient-to-br p-4 ring-1 ring-maleja-pastel/40 transition-all duration-500 ease-lux hover:-translate-y-1 hover:shadow-lift sm:p-5",
+              "group relative flex aspect-[3/4] flex-col justify-between overflow-hidden rounded-[22px] bg-gradient-to-br p-4 ring-1 ring-maleja-pastel/40 transition-[transform,box-shadow] duration-300 ease-lux hover:-translate-y-1 hover:shadow-card sm:p-5",
               c.slug === "ofertas" ? "from-maleja to-maleja-hot text-white ring-0" : tints[i % tints.length]
             )}
           >
@@ -59,11 +59,11 @@ export function CategoryRail({ categories }: { categories: Category[] }) {
               </span>
               <span
                 className={cn(
-                  "grid h-9 w-9 shrink-0 place-items-center rounded-full transition-all duration-300 ease-lux group-hover:rotate-45",
+                  "grid size-9 shrink-0 place-items-center rounded-full transition-transform duration-300 ease-lux group-hover:rotate-45",
                   c.image_url || c.slug === "ofertas" ? "bg-white/20 text-white backdrop-blur" : "bg-white text-maleja"
                 )}
               >
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight className="size-4" />
               </span>
             </span>
           </Link>

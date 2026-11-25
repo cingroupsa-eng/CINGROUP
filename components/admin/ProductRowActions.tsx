@@ -28,7 +28,7 @@ export function PublishToggle({ id, value }: { id: string; value: boolean }) {
       className="flex min-h-[44px] items-center gap-2"
     >
       <span className={cn("relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300", optimistic ? "bg-ok" : "bg-ink/15")}>
-        <span className={cn("inline-block h-[18px] w-[18px] rounded-full bg-white shadow transition-transform duration-300 ease-lux", optimistic ? "translate-x-[22px]" : "translate-x-[3px]")} />
+        <span className={cn("inline-block size-[18px] rounded-full bg-white shadow transition-transform duration-300 ease-lux", optimistic ? "translate-x-[22px]" : "translate-x-[3px]")} />
       </span>
       <span className={cn("text-xs font-medium", optimistic ? "text-ok" : "text-ink-soft")}>{optimistic ? "Publicada" : "Oculta"}</span>
     </button>
@@ -53,9 +53,9 @@ export function FeaturedToggle({ id, value }: { id: string; value: boolean }) {
           if (!r.ok) toast("error", r.error);
         })
       }
-      className="grid h-11 w-11 place-items-center rounded-full transition hover:bg-maleja-canvas"
+      className="grid size-11 place-items-center rounded-full transition hover:bg-maleja-canvas"
     >
-      <Star className={cn("h-[18px] w-[18px]", optimistic ? "fill-maleja text-maleja" : "text-ink-soft")} />
+      <Star className={cn("size-[18px]", optimistic ? "fill-maleja text-maleja" : "text-ink-soft")} />
     </button>
   );
 }

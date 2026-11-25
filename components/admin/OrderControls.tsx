@@ -6,6 +6,7 @@ import { Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Field";
 import { useToast } from "./Toast";
+import { useConfirm } from "./ConfirmDialog";
 import { saveOrderNotes, updateOrderStatus } from "@/lib/actions/admin";
 import { ORDER_STATUSES } from "@/lib/constants";
 import type { OrderStatus } from "@/lib/types";
@@ -18,10 +19,20 @@ export function OrderStatusControl({ id, status, stockApplied }: { id: string; s
   const router = useRouter();
   const [pending, start] = useTransition();
   const [target, setTarget] = useState<OrderStatus | null>(null);
+  const confirm = useConfirm();
 
-  const change = (next: OrderStatus) => {
+  const change = async (next: OrderStatus) => {
     if (next === status) return;
-    if (next === "cancelado" && !confirm("¿Cancelar este pedido?" + (stockApplied ? " El stock se devolverá al inventario." : ""))) return;
+    if (next === "cancelado") {
+      const ok = await confirm({
+        title: "¿Cancelar este pedido?",
+        description: stockApplied ? "Las prendas vuelven al inventario automáticamente." : "Podés reactivarlo más tarde si hace falta.",
+        confirmLabel: "Cancelar pedido",
+        cancelLabel: "Volver",
+        destructive: true,
+      });
+      if (!ok) return;
+    }
     setTarget(next);
     start(async () => {
       const r = await updateOrderStatus(id, next);
@@ -45,12 +56,12 @@ export function OrderStatusControl({ id, status, stockApplied }: { id: string; s
               disabled={pending}
               onClick={() => change(s.id)}
               className={cn(
-                "flex min-h-[48px] items-center gap-2 rounded-2xl px-3 text-left text-sm font-medium ring-1 transition-all duration-300 ease-lux",
+                "flex min-h-[48px] items-center gap-2 rounded-2xl px-3 text-left text-sm font-medium ring-1 transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-lux",
                 active ? "bg-ink text-white ring-ink" : "bg-white text-ink ring-maleja-pastel/50 hover:ring-maleja",
                 pending && !active && "opacity-60"
               )}
             >
-              {target === s.id ? <Loader2 className="h-4 w-4 animate-spin" /> : active ? <Check className="h-4 w-4" /> : <span className={cn("h-2 w-2 rounded-full", s.dot)} />}
+              {target === s.id ? <Loader2 className="size-4 animate-spin" /> : active ? <Check className="size-4" /> : <span className={cn("size-2 rounded-full", s.dot)} />}
               {s.label}
             </button>
           );

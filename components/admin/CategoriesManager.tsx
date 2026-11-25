@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { Field, Input, Switch, Textarea } from "@/components/ui/Field";
 import { SingleImageUpload } from "./ImageUploader";
 import { useToast } from "./Toast";
+import { useConfirm } from "./ConfirmDialog";
 import { deleteBrand, deleteCategory, reorderCategories, saveBrand, saveCategory, toggleCategory } from "@/lib/actions/admin";
 import { categorySchema, type CategoryFormInput, type CategoryFormValues } from "@/lib/validations";
 import type { Brand, Category } from "@/lib/types";
@@ -87,6 +88,7 @@ function CategoryForm({ initial, onDone }: { initial?: CatWithCount | null; onDo
 
 export function CategoriesManager({ categories: initial, brands }: { categories: CatWithCount[]; brands: Brand[] }) {
   const toast = useToast();
+  const confirm = useConfirm();
   const router = useRouter();
   const [items, setItems] = useState(initial);
   const [editing, setEditing] = useState<CatWithCount | null | undefined>(undefined);
@@ -117,18 +119,18 @@ export function CategoriesManager({ categories: initial, brands }: { categories:
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-serif text-2xl">Categorías</h2>
           <Button size="sm" onClick={() => setEditing(null)}>
-            <Plus className="h-4 w-4" /> Nueva
+            <Plus className="size-4" /> Nueva
           </Button>
         </div>
         <ul className="space-y-2">
           {items.map((c, i) => (
             <motion.li layout key={c.id} className="flex items-center gap-3 rounded-3xl bg-white p-3 ring-1 ring-maleja-pastel/40">
               <div className="flex flex-col">
-                <button type="button" onClick={() => move(i, -1)} disabled={i === 0} aria-label="Subir" className="grid h-9 w-9 place-items-center rounded-full text-ink-soft hover:bg-maleja-canvas disabled:opacity-20">
-                  <ArrowUp className="h-4 w-4" />
+                <button type="button" onClick={() => move(i, -1)} disabled={i === 0} aria-label="Subir" className="grid size-9 place-items-center rounded-full text-ink-soft hover:bg-maleja-canvas disabled:opacity-20">
+                  <ArrowUp className="size-4" />
                 </button>
-                <button type="button" onClick={() => move(i, 1)} disabled={i === items.length - 1} aria-label="Bajar" className="grid h-9 w-9 place-items-center rounded-full text-ink-soft hover:bg-maleja-canvas disabled:opacity-20">
-                  <ArrowDown className="h-4 w-4" />
+                <button type="button" onClick={() => move(i, 1)} disabled={i === items.length - 1} aria-label="Bajar" className="grid size-9 place-items-center rounded-full text-ink-soft hover:bg-maleja-canvas disabled:opacity-20">
+                  <ArrowDown className="size-4" />
                 </button>
               </div>
               <div className="relative h-14 w-11 shrink-0 overflow-hidden rounded-xl bg-maleja-canvas">
@@ -155,14 +157,22 @@ export function CategoriesManager({ categories: initial, brands }: { categories:
                   });
                 }}
               />
-              <button type="button" onClick={() => setEditing(c)} aria-label={`Editar ${c.name}`} className="grid h-11 w-11 place-items-center rounded-full hover:bg-maleja-canvas hover:text-maleja">
-                <Pencil className="h-4 w-4" />
+              <button type="button" onClick={() => setEditing(c)} aria-label={`Editar ${c.name}`} className="grid size-11 place-items-center rounded-full hover:bg-maleja-canvas hover:text-maleja">
+                <Pencil className="size-4" />
               </button>
               <button
                 type="button"
                 aria-label={`Eliminar ${c.name}`}
-                onClick={() => {
-                  if (!confirm(`¿Eliminar la categoría "${c.name}"?`)) return;
+                onClick={async () => {
+                  const ok = await confirm({
+                    title: `¿Eliminar «${c.name}»?`,
+                    description: c.product_count
+                      ? `Tiene ${c.product_count} prenda(s). Primero movelas a otra categoría.`
+                      : "La categoría se eliminará definitivamente.",
+                    confirmLabel: "Eliminar",
+                    destructive: true,
+                  });
+                  if (!ok) return;
                   start(async () => {
                     const r = await deleteCategory(c.id);
                     if (!r.ok) return toast("error", r.error);
@@ -170,9 +180,9 @@ export function CategoriesManager({ categories: initial, brands }: { categories:
                     router.refresh();
                   });
                 }}
-                className="hidden h-11 w-11 place-items-center rounded-full text-red-600 hover:bg-red-50 sm:grid"
+                className="grid size-11 place-items-center rounded-full text-red-600 hover:bg-red-50"
               >
-                <Trash2 className="h-4 w-4" />
+                <Trash2 className="size-4" />
               </button>
             </motion.li>
           ))}
@@ -234,17 +244,23 @@ export function CategoriesManager({ categories: initial, brands }: { categories:
                 <button
                   type="button"
                   aria-label={`Eliminar ${b.name}`}
-                  onClick={() => {
-                    if (!confirm(`¿Eliminar la marca "${b.name}"? Las prendas quedarán sin marca.`)) return;
+                  onClick={async () => {
+                    const ok = await confirm({
+                      title: `¿Eliminar la marca «${b.name}»?`,
+                      description: "Las prendas de esta marca quedarán sin marca.",
+                      confirmLabel: "Eliminar",
+                      destructive: true,
+                    });
+                    if (!ok) return;
                     start(async () => {
                       const r = await deleteBrand(b.id);
                       if (!r.ok) return toast("error", r.error);
                       router.refresh();
                     });
                   }}
-                  className="grid h-9 w-9 place-items-center rounded-full text-ink-soft hover:bg-red-50 hover:text-red-600"
+                  className="grid size-9 place-items-center rounded-full text-ink-soft hover:bg-red-50 hover:text-red-600"
                 >
-                  <Trash2 className="h-3.5 w-3.5" />
+                  <Trash2 className="size-3.5" />
                 </button>
               </li>
             ))}

@@ -4,9 +4,10 @@ import { ChevronRight, Search } from "lucide-react";
 import { getAdminContext } from "@/lib/auth";
 import { PageHeader } from "@/components/admin/AdminShell";
 import { StatusBadge } from "@/components/admin/StatusBadge";
+import { OrderTag } from "@/components/brand/OrderTag";
 import { ORDER_STATUSES, PAYMENT_LABEL } from "@/lib/constants";
 import type { Order, OrderStatus } from "@/lib/types";
-import { cn, formatDate, formatPYG, prettyPhone } from "@/lib/utils";
+import { cn, formatPYG, prettyPhone, timeAgo } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Pedidos" };
 
@@ -49,7 +50,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
       <PageHeader title="Pedidos" description="Solicitudes recibidas desde la tienda. Confirmá un pedido para descontar el stock automáticamente." />
 
       <form action="/admin/pedidos" className="relative mb-4">
-        <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" />
+        <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-ink-soft" />
         <input
           name="q"
           defaultValue={q}
@@ -72,7 +73,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
               estado === s.id ? "bg-ink text-white" : "bg-white ring-1 ring-maleja-pastel/50"
             )}
           >
-            <span className={cn("h-2 w-2 rounded-full", s.dot)} />
+            <span className={cn("size-2 rounded-full", s.dot)} />
             {s.label}
             {countMap[s.id] > 0 && <span className={cn("text-xs", estado === s.id ? "text-white/70" : "text-ink-soft")}>{countMap[s.id]}</span>}
           </Link>
@@ -89,20 +90,20 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
             <li key={o.id}>
               <Link
                 href={`/admin/pedidos/${o.id}`}
-                className="flex items-center gap-4 rounded-3xl bg-white p-4 ring-1 ring-maleja-pastel/40 transition hover:ring-maleja-pastel sm:px-6"
+                className="flex items-center gap-4 rounded-2xl border border-maleja-pastel/50 bg-white p-4 transition-colors hover:border-maleja-pastel sm:px-5"
               >
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-semibold text-ink">{o.order_number}</span>
+                    <OrderTag number={o.order_number} tone={o.status === "pendiente" ? "ink" : "soft"} />
                     <StatusBadge status={o.status} />
                   </div>
                   <p className="mt-1 truncate text-sm text-ink">{o.customer_name}</p>
                   <p className="truncate text-xs text-ink-soft">
-                    {prettyPhone(o.customer_phone)} · {PAYMENT_LABEL[o.payment_method]} · {formatDate(o.created_at)}
+                    {prettyPhone(o.customer_phone)} · {PAYMENT_LABEL[o.payment_method]} · {timeAgo(o.created_at)}
                   </p>
                 </div>
                 <span className="shrink-0 text-right text-sm font-semibold tabular-nums sm:text-base">{formatPYG(o.total_pyg)}</span>
-                <ChevronRight className="h-4 w-4 shrink-0 text-ink-soft" />
+                <ChevronRight className="size-4 shrink-0 text-ink-soft" />
               </Link>
             </li>
           ))}

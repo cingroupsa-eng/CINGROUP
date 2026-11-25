@@ -30,29 +30,23 @@ export function ProductPurchase({ product, url }: { product: ProductWithRelation
     const avail = colors.filter((c) => c.stock > 0);
     return avail.length === 1 ? avail[0].name : null;
   });
-  const [size, setSize] = useState<string | null>(() => {
+  const [pickedSize, setSize] = useState<string | null>(() => {
     const avail = sizes.filter((s) => product.variants.some((v) => v.size === s && v.stock > 0));
     return avail.length === 1 ? avail[0] : null;
   });
-  const [qty, setQty] = useState(1);
+  const [pickedQty, setQty] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [added, setAdded] = useState(false);
-
-  const variant = color && size ? product.variants.find((v) => v.color_name === color && v.size === size) ?? null : null;
-  const stock = variant?.stock ?? 0;
-  const totalStock = product.variants.reduce((s, v) => s + v.stock, 0);
 
   const sizeAvailable = (s: string) =>
     product.variants.some((v) => v.size === s && v.stock > 0 && (!color || v.color_name === color));
 
-  useEffect(() => {
-    if (size && !sizeAvailable(size)) setSize(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [color]);
-
-  useEffect(() => {
-    setQty((q) => Math.max(1, Math.min(q, stock || 1)));
-  }, [stock]);
+  // Estado derivado en el render (sin efectos): una talla sin stock para el color elegido se deselecciona sola.
+  const size = pickedSize && sizeAvailable(pickedSize) ? pickedSize : null;
+  const variant = color && size ? product.variants.find((v) => v.color_name === color && v.size === size) ?? null : null;
+  const stock = variant?.stock ?? 0;
+  const qty = Math.max(1, Math.min(pickedQty, stock || 1));
+  const totalStock = product.variants.reduce((s, v) => s + v.stock, 0);
 
   useEffect(() => {
     if (!added) return;
@@ -99,65 +93,62 @@ export function ProductPurchase({ product, url }: { product: ProductWithRelation
   return (
     <div className="space-y-7">
       {/* Color */}
-      <div>
-        <div className="mb-3 flex items-baseline justify-between">
-          <p className="text-sm font-medium text-ink">
-            Color{color && <span className="ml-2 font-normal text-ink-soft">{color}</span>}
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-3" role="radiogroup" aria-label="Color">
+      <fieldset>
+        <legend className="mb-3 text-sm font-medium text-ink">
+          Color{color && <span className="ml-2 font-normal text-ink-soft">{color}</span>}
+        </legend>
+        <div className="flex flex-wrap gap-3">
           {colors.map((c) => {
             const disabled = c.stock <= 0;
             const active = color === c.name;
             return (
-              <button
+              <label
                 key={c.name}
-                type="button"
-                role="radio"
-                aria-checked={active}
-                aria-label={`${c.name}${disabled ? " (agotado)" : ""}`}
                 title={c.name}
-                disabled={disabled}
-                onClick={() => {
-                  setColor(c.name);
-                  setError(null);
-                }}
                 className={cn(
-                  "relative grid h-11 w-11 place-items-center rounded-full transition-all duration-300 ease-lux",
-                  active ? "ring-2 ring-maleja ring-offset-[3px]" : "ring-1 ring-ink/10 hover:ring-maleja-pastel hover:ring-2",
+                  "relative grid size-11 cursor-pointer place-items-center rounded-full transition-[box-shadow,transform] duration-200 ease-lux active:scale-[0.95]",
+                  "has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-maleja",
+                  active ? "ring-2 ring-maleja ring-offset-[3px]" : "ring-1 ring-ink/10 hover:ring-2 hover:ring-maleja-pastel",
                   disabled && "cursor-not-allowed opacity-40"
                 )}
               >
-                <span className="h-9 w-9 rounded-full ring-1 ring-inset ring-black/5" style={{ backgroundColor: c.hex }} />
-                {disabled && <span className="absolute h-px w-11 rotate-45 bg-ink/50" />}
-              </button>
+                <input
+                  type="radio"
+                  name={`color-${product.id}`}
+                  value={c.name}
+                  checked={active}
+                  disabled={disabled}
+                  onChange={() => {
+                    setColor(c.name);
+                    setError(null);
+                  }}
+                  aria-label={`${c.name}${disabled ? " (agotado)" : ""}`}
+                  className="sr-only"
+                />
+                <span aria-hidden className="size-9 rounded-full ring-1 ring-inset ring-black/5" style={{ backgroundColor: c.hex }} />
+                {disabled && <span aria-hidden className="absolute h-px w-11 rotate-45 bg-ink/50" />}
+              </label>
             );
           })}
         </div>
-      </div>
+      </fieldset>
 
       {/* Talla */}
-      <motion.div animate={shake}>
-        <p className="mb-3 text-sm font-medium text-ink">
+      <motion.fieldset animate={shake} aria-describedby={error ? "purchase-error" : undefined}>
+        <legend className="mb-3 text-sm font-medium text-ink">
           Talla{size && <span className="ml-2 font-normal text-ink-soft">{size}</span>}
-        </p>
-        <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Talla">
+        </legend>
+        <div className="flex flex-wrap gap-2">
           {sizes.map((s) => {
             const available = sizeAvailable(s);
             const active = size === s;
             return (
-              <button
+              <label
                 key={s}
-                type="button"
-                role="radio"
-                aria-checked={active}
-                disabled={!available}
-                onClick={() => {
-                  setSize(s);
-                  setError(null);
-                }}
                 className={cn(
-                  "relative min-h-[44px] min-w-[52px] rounded-full border px-4 text-sm font-medium transition-all duration-300 ease-lux",
+                  "relative grid min-h-[44px] min-w-[52px] cursor-pointer place-items-center rounded-full border px-4 text-sm font-medium",
+                  "transition-[background-color,border-color,color,transform] duration-200 ease-lux active:scale-[0.96]",
+                  "has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-maleja",
                   active
                     ? "border-ink bg-ink text-white"
                     : available
@@ -165,25 +156,38 @@ export function ProductPurchase({ product, url }: { product: ProductWithRelation
                       : "cursor-not-allowed border-dashed border-ink/15 bg-transparent text-ink-soft/50 line-through"
                 )}
               >
-                {s}
-              </button>
+                <input
+                  type="radio"
+                  name={`size-${product.id}`}
+                  value={s}
+                  checked={active}
+                  disabled={!available}
+                  onChange={() => {
+                    setSize(s);
+                    setError(null);
+                  }}
+                  aria-label={`Talla ${s}${available ? "" : " (sin stock)"}`}
+                  className="sr-only"
+                />
+                <span aria-hidden>{s}</span>
+              </label>
             );
           })}
         </div>
-      </motion.div>
+      </motion.fieldset>
 
       {/* Disponibilidad */}
       <div className="min-h-[24px] text-sm" aria-live="polite">
         {totalStock <= 0 ? (
           <span className="inline-flex items-center gap-2 font-medium text-ink-soft">
-            <span className="h-2 w-2 rounded-full bg-ink-soft" /> Agotado por el momento
+            <span className="size-2 rounded-full bg-ink-soft" /> Agotado por el momento
           </span>
         ) : variant ? (
           variant.stock > 0 ? (
             <span className="inline-flex items-center gap-2 font-medium text-ok">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ok opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-ok" />
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-ok opacity-60" />
+                <span className="relative inline-flex size-2 rounded-full bg-ok" />
               </span>
               {variant.stock <= 3 ? `¡Últimas ${variant.stock} unidades!` : "Disponible"}
             </span>
@@ -200,41 +204,41 @@ export function ProductPurchase({ product, url }: { product: ProductWithRelation
         <div className="flex h-[52px] items-center justify-between rounded-full border border-maleja-pastel/70 bg-white sm:w-[140px]">
           <button
             type="button"
-            onClick={() => setQty((q) => Math.max(1, q - 1))}
+            onClick={() => setQty(Math.max(1, qty - 1))}
             disabled={qty <= 1}
             aria-label="Restar cantidad"
             className="grid h-[52px] w-12 place-items-center rounded-full text-ink transition hover:text-maleja disabled:opacity-30"
           >
-            <Minus className="h-4 w-4" />
+            <Minus className="size-4" />
           </button>
           <span className="text-base font-medium tabular-nums" aria-live="polite">
             {qty}
           </span>
           <button
             type="button"
-            onClick={() => setQty((q) => Math.min(stock || 1, q + 1))}
+            onClick={() => setQty(Math.min(stock || 1, qty + 1))}
             disabled={!variant || qty >= stock}
             aria-label="Sumar cantidad"
             className="grid h-[52px] w-12 place-items-center rounded-full text-ink transition hover:text-maleja disabled:opacity-30"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="size-4" />
           </button>
         </div>
         <Button size="lg" className="flex-1" onClick={handleAdd} disabled={totalStock <= 0}>
           {added ? (
             <>
-              <Check className="h-5 w-5" /> ¡Agregado a tu bolsa!
+              <Check className="size-5" /> ¡Agregado a tu bolsa!
             </>
           ) : (
             <>
-              <ShoppingBag className="h-5 w-5" strokeWidth={1.8} /> Agregar a la bolsa
+              <ShoppingBag className="size-5" strokeWidth={1.8} /> Agregar a la bolsa
             </>
           )}
         </Button>
       </div>
 
       {error && (
-        <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} role="alert" className="text-sm font-medium text-maleja">
+        <motion.p id="purchase-error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} role="alert" className="text-sm font-medium text-maleja">
           {error}
         </motion.p>
       )}
@@ -246,7 +250,7 @@ export function ProductPurchase({ product, url }: { product: ProductWithRelation
           rel="noopener noreferrer"
           className={buttonStyles("outline", "lg", "w-full !border-ok/30 !text-ok hover:!border-ok hover:!bg-ok/5")}
         >
-          <WhatsAppIcon className="h-5 w-5" /> Consultar por WhatsApp
+          <WhatsAppIcon className="size-5" /> Consultar por WhatsApp
         </a>
       )}
     </div>

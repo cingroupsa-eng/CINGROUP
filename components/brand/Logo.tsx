@@ -90,7 +90,7 @@ export function Logo({
         <svg
           viewBox="0 0 10 10"
           aria-hidden
-          className={cn("absolute -right-2.5 top-0 h-2 w-2", tone === "dark" ? "text-maleja" : "text-maleja-pastel")}
+          className={cn("absolute -right-2.5 top-0 size-2", tone === "dark" ? "text-maleja" : "text-maleja-pastel")}
         >
           <path d="M5 0 L6.2 3.8 L10 5 L6.2 6.2 L5 10 L3.8 6.2 L0 5 L3.8 3.8 Z" fill="currentColor" />
         </svg>

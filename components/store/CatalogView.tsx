@@ -56,6 +56,7 @@ export async function CatalogView({
 }) {
   const filters = parseFilters(searchParams);
   const [page, options] = await Promise.all([getProducts({ ...filters, categorySlug }), getFilterOptions(categorySlug)]);
+  const filterKey = JSON.stringify(searchParams);
   const hasFilters = Boolean(filters.q || filters.sizes?.length || filters.colors?.length || filters.min || filters.max);
 
   const pageHref = (n: number) => {
@@ -103,9 +104,10 @@ export async function CatalogView({
       </nav>
 
       <div className="lg:grid lg:grid-cols-[240px_1fr] lg:gap-12">
-        <DesktopFilters options={options} />
+        {/* key = URL actual: el borrador de filtros se reinicia al navegar, sin efectos de sincronización */}
+        <DesktopFilters key={`d-${filterKey}`} options={options} />
         <div>
-          <CatalogFilters options={options} total={page.total} />
+          <CatalogFilters key={`m-${filterKey}`} options={options} total={page.total} />
           <div className="mt-8">
             {page.products.length > 0 ? (
               <ProductGrid products={page.products} priorityCount={4} />
@@ -126,7 +128,7 @@ export async function CatalogView({
             <nav aria-label="Paginación" className="mt-14 flex items-center justify-center gap-2">
               {page.page > 1 && (
                 <Link href={pageHref(page.page - 1)} aria-label="Página anterior" className={buttonStyles("outline", "icon")}>
-                  <ChevronLeft className="h-4 w-4" />
+                  <ChevronLeft className="size-4" />
                 </Link>
               )}
               {Array.from({ length: page.pageCount }, (_, i) => i + 1)
@@ -146,7 +148,7 @@ export async function CatalogView({
                 ))}
               {page.page < page.pageCount && (
                 <Link href={pageHref(page.page + 1)} aria-label="Página siguiente" className={buttonStyles("outline", "icon")}>
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="size-4" />
                 </Link>
               )}
             </nav>

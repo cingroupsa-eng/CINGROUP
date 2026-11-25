@@ -13,9 +13,9 @@ export function Benefits() {
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
       {items.map(({ Icon, title, text }, i) => (
         <Reveal key={title} delay={i * 0.07}>
-          <div className="group flex h-full gap-4 rounded-3xl border border-maleja-pastel/40 bg-white p-5 transition-all duration-500 ease-lux hover:-translate-y-1 hover:shadow-soft lg:flex-col lg:p-7">
-            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-maleja-canvas text-maleja transition-colors duration-300 group-hover:bg-maleja group-hover:text-white">
-              <Icon className="h-5 w-5" strokeWidth={1.6} />
+          <div className="group flex h-full gap-4 rounded-3xl border border-maleja-pastel/40 bg-white p-5 transition-[transform,box-shadow] duration-300 ease-lux hover:-translate-y-1 hover:shadow-soft lg:flex-col lg:p-7">
+            <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-maleja-canvas text-maleja transition-colors duration-300 group-hover:bg-maleja group-hover:text-white">
+              <Icon className="size-5" strokeWidth={1.6} />
             </span>
             <div>
               <h3 className="font-serif text-xl text-ink">{title}</h3>

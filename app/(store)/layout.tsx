@@ -14,7 +14,7 @@ export default async function StoreLayout({ children }: { children: React.ReactN
   return (
     <StoreProvider settings={settings} categories={categories}>
       <CartProvider>
-        <a href="#contenido" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-white">
+        <a href="#contenido" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-skip focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-white">
           Saltar al contenido
         </a>
         <Header />

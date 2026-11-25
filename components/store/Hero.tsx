@@ -20,19 +20,19 @@ export function Hero({ settings }: { settings: StoreSettings }) {
 
   return (
     <section className="relative overflow-hidden">
-      <div aria-hidden className="pointer-events-none absolute -right-32 top-10 h-[420px] w-[420px] rounded-full bg-maleja-pastel/40 blur-3xl" />
-      <div aria-hidden className="pointer-events-none absolute -left-40 bottom-0 h-[320px] w-[320px] rounded-full bg-maleja-hot/10 blur-3xl" />
-
-      <div className="container-lux relative grid items-center gap-10 pb-16 pt-8 sm:pt-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:pb-24 lg:pt-16">
+      <div aria-hidden className="pointer-events-none absolute -right-32 top-10 hidden size-[420px] rounded-full bg-maleja-pastel/30 blur-3xl lg:block" />
+      
+      <div className="container-lux relative grid items-center gap-10 pb-16 pt-10 sm:pt-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:pb-24 lg:pt-16">
         {/* Texto */}
-        <div className="order-2 text-center lg:order-1 lg:text-left">
-          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease }} className="eyebrow">
+        <div className="text-center lg:order-1 lg:text-left">
+          <motion.p initial={{ opacity: 0, transform: "translateY(12px)" }} animate={{ opacity: 1, transform: "translateY(0px)" }} transition={{ duration: 0.7, ease }} className="eyebrow">
             Boutique · Paraguay
           </motion.p>
           <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.08, ease }}
+            // Título = LCP: sin opacidad 0 inicial, sólo un leve desplazamiento.
+            initial={{ transform: "translateY(12px)" }}
+            animate={{ transform: "translateY(0px)" }}
+            transition={{ duration: 0.7, ease }}
             className="heading-xl mt-5 text-ink"
           >
             {title ? (
@@ -65,22 +65,22 @@ export function Hero({ settings }: { settings: StoreSettings }) {
             )}
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, transform: "translateY(16px)" }}
+            animate={{ opacity: 1, transform: "translateY(0px)" }}
             transition={{ duration: 0.8, delay: 0.2, ease }}
             className="mx-auto mt-7 max-w-md text-[15px] leading-relaxed text-ink-soft sm:text-base lg:mx-0"
           >
             {subtitle}
           </motion.p>
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, transform: "translateY(16px)" }}
+            animate={{ opacity: 1, transform: "translateY(0px)" }}
             transition={{ duration: 0.8, delay: 0.3, ease }}
             className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start"
           >
             <Link href="/tienda?orden=recientes" className={buttonStyles("primary", "lg", "group w-full sm:w-auto")}>
               Ver novedades
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-lux group-hover:translate-x-1" />
+              <ArrowRight className="size-4 transition-transform duration-300 ease-lux group-hover:translate-x-1" />
             </Link>
             <Link href="/categoria/ofertas" className={buttonStyles("outline", "lg", "w-full sm:w-auto")}>
               Ofertas
@@ -103,7 +103,7 @@ export function Hero({ settings }: { settings: StoreSettings }) {
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.1, ease }}
-          className="relative order-1 mx-auto w-full max-w-[340px] sm:max-w-[440px] lg:order-2 lg:max-w-none"
+          className="relative mx-auto w-full max-w-[280px] sm:max-w-[400px] lg:order-2 lg:max-w-none"
         >
           <div className="relative mx-auto aspect-[4/5] w-[82%] overflow-hidden rounded-t-[999px] rounded-b-[36px] bg-gradient-to-b from-maleja-pastel/60 via-maleja-canvas to-white shadow-lift ring-1 ring-maleja-pastel/50 sm:w-[78%]">
             {settings.hero_image_url ? (
@@ -118,16 +118,8 @@ export function Hero({ settings }: { settings: StoreSettings }) {
             ) : (
               <div className="absolute inset-0">
                 <div className="grain absolute inset-0" />
-                <motion.div
-                  className="absolute inset-x-[15%] top-[16%] h-[58%] rounded-t-[999px] border border-maleja/25"
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <motion.div
-                  className="absolute inset-x-[24%] top-[25%] h-[49%] rounded-t-[999px] bg-gradient-to-b from-maleja-hot/30 to-maleja/5"
-                  animate={{ y: [0, 6, 0] }}
-                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                />
+                <div className="absolute inset-x-[15%] top-[16%] h-[58%] rounded-t-[999px] border border-maleja/25" />
+                <div className="absolute inset-x-[24%] top-[25%] h-[49%] rounded-t-[999px] bg-gradient-to-b from-maleja-hot/25 to-maleja/5" />
                 <svg viewBox="0 0 100 100" className="absolute inset-x-[33%] top-[38%] aspect-square drop-shadow-sm" aria-hidden>
                   <MonogramPaths color="#F00072" />
                 </svg>
@@ -139,18 +131,18 @@ export function Hero({ settings }: { settings: StoreSettings }) {
           <RotatingBadge
             id="hero"
             text="Tu estilo · Tu esencia · Maleja · "
-            className="absolute -left-1 top-[6%] h-24 w-24 rounded-full bg-white/80 text-ink shadow-card backdrop-blur sm:left-0 sm:h-32 sm:w-32"
+            className="absolute -left-1 top-[6%] size-24 rounded-full bg-white/80 text-ink shadow-card backdrop-blur sm:left-0 sm:size-32"
             center={<span className="font-serif text-3xl italic text-maleja">M</span>}
           />
 
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, transform: "translateX(16px)" }}
+            animate={{ opacity: 1, transform: "translateX(0px)" }}
             transition={{ duration: 0.8, delay: 0.8, ease }}
-            className="absolute -right-1 bottom-[12%] flex items-center gap-3 rounded-2xl bg-white/90 p-3 pr-5 shadow-card ring-1 ring-maleja-pastel/40 backdrop-blur sm:right-0"
+            className="absolute -right-1 bottom-[12%] hidden items-center sm:flex gap-3 rounded-2xl bg-white/90 p-3 pr-5 shadow-card ring-1 ring-maleja-pastel/40 backdrop-blur sm:right-0"
           >
-            <span className="grid h-10 w-10 place-items-center rounded-full bg-ok/10 text-ok">
-              <WhatsAppIcon className="h-5 w-5" />
+            <span className="grid size-10 place-items-center rounded-full bg-ok/10 text-ok">
+              <WhatsAppIcon className="size-5" />
             </span>
             <span className="text-left">
               <span className="block text-[11px] uppercase tracking-[0.16em] text-ink-soft">Asesoría</span>

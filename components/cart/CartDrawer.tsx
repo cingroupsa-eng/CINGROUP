@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import { Sheet } from "@/components/ui/Sheet";
@@ -21,12 +21,9 @@ export function CartDrawer() {
   const [step, setStep] = useState<Step>("cart");
   const [success, setSuccess] = useState<CheckoutSuccess | null>(null);
 
-  useEffect(() => {
-    if (!isOpen && step !== "success") setStep("cart");
-  }, [isOpen, step]);
-
   const onClose = () => {
     close();
+    if (step === "checkout") setStep("cart");
     if (step === "success") {
       setTimeout(() => {
         setStep("cart");
@@ -44,7 +41,7 @@ export function CartDrawer() {
       </span>
     ) : step === "checkout" ? (
       <button type="button" onClick={() => setStep("cart")} className="flex min-h-[44px] items-center gap-2 text-left">
-        <ArrowLeft className="h-5 w-5" /> Finalizar pedido
+        <ArrowLeft className="size-5" /> Finalizar pedido
       </button>
     ) : (
       "¡Pedido registrado!"
@@ -90,9 +87,9 @@ export function CartDrawer() {
           >
             {items.length === 0 ? (
               <div className="flex flex-col items-center px-8 py-20 text-center">
-                <div className="relative grid h-24 w-24 place-items-center rounded-full bg-maleja-canvas">
-                  <ShoppingBag className="h-10 w-10 text-maleja" strokeWidth={1.3} />
-                  <span className="absolute -right-1 top-2 h-3 w-3 animate-floaty rounded-full bg-maleja-pastel" />
+                <div className="relative grid size-24 place-items-center rounded-full bg-maleja-canvas">
+                  <ShoppingBag className="size-10 text-maleja" strokeWidth={1.3} />
+                  <span className="absolute -right-1 top-2 size-3 animate-floaty rounded-full bg-maleja-pastel" />
                 </div>
                 <p className="mt-6 font-serif text-3xl text-ink">Tu bolsa está vacía</p>
                 <p className="mt-2 max-w-xs text-sm text-ink-soft">Descubrí prendas pensadas para resaltar tu esencia.</p>
@@ -133,14 +130,14 @@ export function CartDrawer() {
                               type="button"
                               onClick={() => remove(it.key)}
                               aria-label={`Quitar ${it.name}`}
-                              className="-mr-2 -mt-2 grid h-11 w-11 shrink-0 place-items-center rounded-full text-ink-soft transition hover:bg-maleja-canvas hover:text-maleja"
+                              className="-mr-2 -mt-2 grid size-11 shrink-0 place-items-center rounded-full text-ink-soft transition hover:bg-maleja-canvas hover:text-maleja"
                             >
-                              <Trash2 className="h-4 w-4" />
+                              <Trash2 className="size-4" />
                             </button>
                           </div>
                           <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ink-soft">
                             <span className="inline-flex items-center gap-1.5">
-                              <span className="h-3 w-3 rounded-full ring-1 ring-ink/10" style={{ backgroundColor: it.colorHex }} />
+                              <span className="size-3 rounded-full ring-1 ring-ink/10" style={{ backgroundColor: it.colorHex }} />
                               {it.colorName}
                             </span>
                             <span>Talla {it.size}</span>
@@ -151,9 +148,9 @@ export function CartDrawer() {
                                 type="button"
                                 onClick={() => setQty(it.key, it.quantity - 1)}
                                 aria-label="Restar uno"
-                                className="grid h-10 w-10 place-items-center rounded-full text-ink transition hover:text-maleja"
+                                className="grid size-10 place-items-center rounded-full text-ink transition hover:text-maleja"
                               >
-                                <Minus className="h-3.5 w-3.5" />
+                                <Minus className="size-3.5" />
                               </button>
                               <span className="w-6 text-center text-sm font-medium tabular-nums">{it.quantity}</span>
                               <button
@@ -161,9 +158,9 @@ export function CartDrawer() {
                                 onClick={() => setQty(it.key, it.quantity + 1)}
                                 disabled={it.quantity >= it.maxStock}
                                 aria-label="Sumar uno"
-                                className="grid h-10 w-10 place-items-center rounded-full text-ink transition hover:text-maleja disabled:opacity-30"
+                                className="grid size-10 place-items-center rounded-full text-ink transition hover:text-maleja disabled:opacity-30"
                               >
-                                <Plus className="h-3.5 w-3.5" />
+                                <Plus className="size-3.5" />
                               </button>
                             </div>
                             <div className="text-right">

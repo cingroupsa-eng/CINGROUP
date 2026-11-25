@@ -8,12 +8,12 @@ export const metadata: Metadata = { title: "Ingresar" };
 
 export default function LoginPage() {
   return (
-    <div className="relative grid min-h-dvh place-items-center overflow-hidden bg-maleja-canvas px-4 py-10">
-      <div aria-hidden className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-maleja-pastel/50 blur-3xl" />
-      <div aria-hidden className="absolute -bottom-40 -right-24 h-[420px] w-[420px] rounded-full bg-maleja-hot/15 blur-3xl" />
+    <main className="relative grid min-h-dvh place-items-center overflow-hidden bg-maleja-canvas px-4 py-10">
+      <div aria-hidden className="absolute -left-32 -top-32 size-96 rounded-full bg-maleja-pastel/30 blur-3xl" />
+      <div aria-hidden className="absolute -bottom-40 -right-24 size-[420px] rounded-full bg-maleja-hot/10 blur-3xl" />
       <div className="relative w-full max-w-[420px]">
         <div className="mb-8 flex flex-col items-center gap-5">
-          <Isotype className="h-16 w-16 drop-shadow-[0_14px_30px_rgba(240,0,114,0.35)]" />
+          <Isotype className="size-16 drop-shadow-[0_14px_30px_rgba(240,0,114,0.35)]" />
           <Logo size="md" />
         </div>
         <div className="card-lux p-6 sm:p-8">
@@ -33,12 +33,12 @@ export default function LoginPage() {
             </div>
           )}
         </div>
-        <p className="mt-6 text-center text-xs text-ink-soft">
+        <p className="mt-6 text-center text-sm text-ink">
           <a href="/" className="hover:text-maleja">
             ← Volver a la tienda
           </a>
         </p>
       </div>
-    </div>
+    </main>
   );
 }

@@ -20,8 +20,14 @@
   ::selection {
     @apply bg-maleja text-white;
   }
-  h1, h2, h3, .font-serif {
+  h1, h2, h3, h4, .font-serif {
     font-optical-sizing: auto;
+  }
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+  p, li, dd, label {
+    text-wrap: pretty;
   }
   :focus-visible {
     outline: 2px solid rgba(240, 0, 114, 0.45);

@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
 import { getCategories } from "@/lib/data";
-import { CatalogView, type SearchParams } from "@/components/store/CatalogView";
+import { CatalogView, parseFilters, type SearchParams } from "@/components/store/CatalogView";
+import { pageMeta, paginatedPath } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Tienda",
-  description: "Descubrí toda la colección de EL BAZAR DE MALEJA: vestidos, blusas, conjuntos, calzados, carteras y accesorios.",
-  alternates: { canonical: "/tienda" },
-};
+export async function generateMetadata({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<Metadata> {
+  const sp = await searchParams;
+  const { page = 1, q } = parseFilters(sp);
+  return pageMeta({
+    title: page > 1 ? `Tienda — página ${page}` : "Tienda",
+    description: "Descubrí toda la colección de EL BAZAR DE MALEJA: vestidos, blusas, conjuntos, calzados, carteras y accesorios.",
+    path: paginatedPath("/tienda", page),
+    // Resultados de búsqueda: no indexar (contenido duplicado).
+    noindex: Boolean(q),
+  });
+}
 
 export default async function ShopPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const [sp, categories] = await Promise.all([searchParams, getCategories()]);

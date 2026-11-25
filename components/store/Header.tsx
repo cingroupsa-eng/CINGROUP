@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Search, ShoppingBag } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
@@ -12,28 +12,30 @@ import { useStore } from "./StoreContext";
 import { cn, waLink } from "@/lib/utils";
 
 export function CartButton({ className }: { className?: string }) {
-  const { count, open, hydrated, lastAddedAt } = useCart();
+  const { count, open, hydrated, lastAddedAt, isOpen } = useCart();
   return (
     <button
       type="button"
       onClick={open}
+      aria-haspopup="dialog"
+      aria-expanded={isOpen}
       aria-label={`Abrir bolsa de compras${count ? `, ${count} artículos` : ""}`}
       className={cn(
-        "relative grid h-11 w-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja",
+        "relative grid size-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja",
         className
       )}
     >
-      <motion.span key={lastAddedAt} initial={lastAddedAt ? { scale: 0.7, rotate: -12 } : false} animate={{ scale: 1, rotate: 0 }} transition={{ type: "spring", stiffness: 500, damping: 15 }}>
-        <ShoppingBag className="h-[22px] w-[22px]" strokeWidth={1.6} />
+      <motion.span key={lastAddedAt} initial={lastAddedAt ? { scale: 0.85, rotate: -8 } : false} animate={{ scale: 1, rotate: 0 }} transition={{ type: "spring", duration: 0.4, bounce: 0.35 }}>
+        <ShoppingBag className="size-[22px]" strokeWidth={1.6} />
       </motion.span>
       <AnimatePresence>
         {hydrated && count > 0 && (
           <motion.span
             key={count}
-            initial={{ scale: 0, y: 4 }}
-            animate={{ scale: 1, y: 0 }}
-            exit={{ scale: 0 }}
-            transition={{ type: "spring", stiffness: 600, damping: 20 }}
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.6, transition: { duration: 0.12 } }}
+            transition={{ type: "spring", duration: 0.35, bounce: 0.3 }}
             className="absolute right-0.5 top-0.5 grid h-[19px] min-w-[19px] place-items-center rounded-full bg-maleja px-1 text-[10px] font-semibold text-white ring-2 ring-white"
           >
             {count > 99 ? "99+" : count}
@@ -45,22 +47,26 @@ export function CartButton({ className }: { className?: string }) {
 }
 
 export function Header() {
-  const { categories, settings, setMenuOpen, setSearchOpen } = useStore();
+  const { categories, settings, menuOpen, searchOpen, setMenuOpen, setSearchOpen } = useStore();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const sentinel = useRef<HTMLDivElement>(null);
 
+  // Sin listeners de scroll: un centinela invisible indica si ya bajamos.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const el = sentinel.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setScrolled(!entry.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   const navCats = categories.slice(0, 9);
 
   return (
     <>
-      <div className="relative z-40 bg-ink text-center text-[11px] font-medium uppercase tracking-[0.22em] text-white/90">
+      <div ref={sentinel} aria-hidden className="pointer-events-none absolute left-0 top-12 h-px w-px" />
+      <div role="region" aria-label="Avisos de la tienda" className="relative z-header bg-ink text-center text-[11px] font-medium uppercase tracking-[0.22em] text-white/90">
         <div className="container-lux flex h-8 items-center justify-center gap-2 overflow-hidden whitespace-nowrap">
           <span className="hidden sm:inline">Envíos a todo Paraguay</span>
           <span className="hidden text-maleja-pastel sm:inline">✦</span>
@@ -69,7 +75,7 @@ export function Header() {
       </div>
       <header
         className={cn(
-          "sticky top-0 z-40 border-b transition-all duration-300 ease-lux",
+          "sticky top-0 z-header border-b transition-[background-color,border-color,box-shadow] duration-300 ease-out",
           scrolled
             ? "border-maleja-pastel/40 bg-white/75 shadow-[0_8px_30px_-18px_rgba(33,24,32,0.25)] backdrop-blur-xl backdrop-saturate-150"
             : "border-transparent bg-maleja-canvas/70 backdrop-blur-md"
@@ -81,9 +87,11 @@ export function Header() {
               type="button"
               onClick={() => setMenuOpen(true)}
               aria-label="Abrir menú"
-              className="grid h-11 w-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja lg:hidden"
+              aria-haspopup="dialog"
+              aria-expanded={menuOpen}
+              className="grid size-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja lg:hidden"
             >
-              <Menu className="h-[22px] w-[22px]" strokeWidth={1.6} />
+              <Menu className="size-[22px]" strokeWidth={1.6} />
             </button>
             <nav className="hidden items-center gap-7 text-[13px] font-medium uppercase tracking-[0.16em] lg:flex">
               <Link href="/tienda" className={cn("link-underline py-2", pathname === "/tienda" && "text-maleja")}>
@@ -112,9 +120,11 @@ export function Header() {
               type="button"
               onClick={() => setSearchOpen(true)}
               aria-label="Buscar productos"
-              className="grid h-11 w-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja"
+              aria-haspopup="dialog"
+              aria-expanded={searchOpen}
+              className="grid size-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja"
             >
-              <Search className="h-[21px] w-[21px]" strokeWidth={1.6} />
+              <Search className="size-[21px]" strokeWidth={1.6} />
             </button>
             {settings.whatsapp_number && (
               <a
@@ -122,9 +132,9 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Escribinos por WhatsApp"
-                className="hidden h-11 w-11 place-items-center rounded-full text-ok transition hover:bg-ok/10 sm:grid"
+                className="hidden size-11 place-items-center rounded-full text-ok transition hover:bg-ok/10 sm:grid"
               >
-                <WhatsAppIcon className="h-[21px] w-[21px]" />
+                <WhatsAppIcon className="size-[21px]" />
               </a>
             )}
             <CartButton />

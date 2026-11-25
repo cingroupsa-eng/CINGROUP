@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import { BRAND, SITE_URL } from "@/lib/constants";
 import { ServiceWorkerRegister } from "@/components/store/ServiceWorkerRegister";
+import { MotionProvider } from "@/components/MotionProvider";
 import "./globals.css";
 
 const serif = Cormorant_Garamond({
@@ -48,7 +49,6 @@ export const metadata: Metadata = {
     siteName: BRAND.name,
     title: `${BRAND.name} — ${BRAND.slogan}`,
     description: BRAND.description,
-    url: SITE_URL,
   },
   twitter: {
     card: "summary_large_image",
@@ -69,7 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es-PY" className={`${serif.variable} ${sans.variable}`}>
       <body className="min-h-dvh">
-        {children}
+        <MotionProvider>{children}</MotionProvider>
         <ServiceWorkerRegister />
       </body>
     </html>

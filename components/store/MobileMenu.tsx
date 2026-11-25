@@ -43,7 +43,7 @@ export function MobileMenu() {
                 )}
               >
                 {l.label}
-                <ChevronRight className="h-4 w-4 text-ink-soft" />
+                <ChevronRight className="size-4 text-ink-soft" />
               </Link>
             </li>
           ))}
@@ -70,7 +70,7 @@ export function MobileMenu() {
                   <span className="w-5 font-serif text-sm italic text-ink-soft">{String(i + 1).padStart(2, "0")}</span>
                   {c.name}
                 </span>
-                <ChevronRight className="h-4 w-4 text-ink-soft" />
+                <ChevronRight className="size-4 text-ink-soft" />
               </Link>
             </motion.li>
           ))}
@@ -86,8 +86,8 @@ export function MobileMenu() {
               rel="noopener noreferrer"
               className="mt-4 inline-flex min-h-[44px] items-center gap-2 rounded-full bg-ok px-5 text-sm font-medium text-white"
             >
-              <WhatsAppIcon className="h-4 w-4" /> Escribinos
-              <ArrowUpRight className="h-4 w-4" />
+              <WhatsAppIcon className="size-4" /> Escribinos
+              <ArrowUpRight className="size-4" />
             </a>
           ) : (
             <p className="mt-3 text-xs italic text-ink-soft">WhatsApp en configuración.</p>
@@ -101,9 +101,9 @@ export function MobileMenu() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="grid h-11 w-11 place-items-center rounded-full bg-white text-ink transition hover:text-maleja"
+                  className="grid size-11 place-items-center rounded-full bg-white text-ink transition hover:text-maleja"
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className="size-5" />
                 </a>
               ))}
             </div>

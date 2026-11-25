@@ -1,8 +1,21 @@
 import { clsx, type ClassValue } from "clsx";
+import { extendTailwindMerge } from "tailwind-merge";
 import { SIZE_ORDER } from "./constants";
 
+const twMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      shadow: [{ shadow: ["soft", "card", "lift"] }],
+      tracking: [{ tracking: ["luxe"] }],
+      ease: [{ ease: ["lux", "drawer"] }],
+      z: [{ z: ["float", "header", "overlay", "search", "lightbox", "toast", "skip"] }],
+    },
+  },
+});
+
+/** Combina clases condicionales y resuelve conflictos de Tailwind (la última gana). */
 export function cn(...inputs: ClassValue[]) {
-  return clsx(inputs);
+  return twMerge(clsx(inputs));
 }
 
 /** 150000 → "Gs. 150.000" (separador de miles con punto, sin decimales). */
@@ -90,4 +103,14 @@ export function isSafeHttpUrl(value: string | null | undefined): value is string
   } catch {
     return false;
   }
+}
+
+/** "hace 5 min", "hace 2 h", "ayer", o la fecha corta. */
+export function timeAgo(iso: string): string {
+  const diff = (Date.now() - new Date(iso).getTime()) / 1000;
+  if (diff < 60) return "recién";
+  if (diff < 3600) return `hace ${Math.floor(diff / 60)} min`;
+  if (diff < 86400) return `hace ${Math.floor(diff / 3600)} h`;
+  if (diff < 172800) return "ayer";
+  return formatDate(iso, false);
 }

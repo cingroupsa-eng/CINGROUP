@@ -22,7 +22,7 @@ export function SectionHeading({
       {href && (
         <Link href={href} className="group hidden shrink-0 items-center gap-2 text-sm font-medium text-ink sm:inline-flex">
           <span className="link-underline">{linkLabel}</span>
-          <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-lux group-hover:translate-x-1" />
+          <ArrowRight className="size-4 transition-transform duration-300 ease-lux group-hover:translate-x-1" />
         </Link>
       )}
     </Reveal>

@@ -11,6 +11,7 @@ import { JsonLd } from "@/components/store/JsonLd";
 import { Price } from "@/components/ui/Price";
 import { SITE_URL } from "@/lib/constants";
 import { discountPercent } from "@/lib/utils";
+import { pageMeta } from "@/lib/seo";
 
 export const revalidate = 120;
 export const dynamicParams = true;
@@ -23,18 +24,14 @@ type Params = Promise<{ slug: string }>;
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
   const p = await getProductBySlug(slug);
-  if (!p) return { title: "Producto no encontrado" };
-  const description = (p.description || `${p.name} en EL BAZAR DE MALEJA. Pedí por WhatsApp.`).slice(0, 160);
-  return {
+  if (!p) return { title: "Producto no encontrado", robots: { index: false } };
+  const description = (p.description || `${p.name} en EL BAZAR DE MALEJA. Pedí por WhatsApp.`).replace(/\s+/g, " ").slice(0, 160);
+  return pageMeta({
     title: p.name,
     description,
-    alternates: { canonical: `/producto/${p.slug}` },
-    openGraph: {
-      title: p.name,
-      description,
-      images: p.images.slice(0, 3).map((i) => ({ url: i.url, alt: i.alt_text || p.name })),
-    },
-  };
+    path: `/producto/${p.slug}`,
+    images: p.images.slice(0, 3).map((i) => ({ url: i.url, alt: i.alt_text || p.name })),
+  });
 }
 
 export default async function ProductPage({ params }: { params: Params }) {
@@ -64,7 +61,7 @@ export default async function ProductPage({ params }: { params: Params }) {
           name: product.name,
           description: product.description ?? undefined,
           image: product.images.map((i) => i.url),
-          sku: product.variants[0]?.sku ?? product.id,
+          ...(product.variants[0]?.sku ? { sku: product.variants[0].sku } : {}),
           brand: product.brand ? { "@type": "Brand", name: product.brand.name } : undefined,
           category: product.category?.name,
           offers: {
@@ -83,7 +80,7 @@ export default async function ProductPage({ params }: { params: Params }) {
           <Link href="/" className="hover:text-maleja">
             Inicio
           </Link>
-          <ChevronRight className="h-3 w-3 shrink-0" />
+          <ChevronRight className="size-3 shrink-0" />
           {product.category ? (
             <Link href={`/categoria/${product.category.slug}`} className="hover:text-maleja">
               {product.category.name}
@@ -93,7 +90,7 @@ export default async function ProductPage({ params }: { params: Params }) {
               Tienda
             </Link>
           )}
-          <ChevronRight className="h-3 w-3 shrink-0" />
+          <ChevronRight className="size-3 shrink-0" />
           <span className="truncate text-ink">{product.name}</span>
         </nav>
 
@@ -119,8 +116,8 @@ export default async function ProductPage({ params }: { params: Params }) {
             <div className="mt-8 divide-y divide-maleja-pastel/40 rounded-3xl border border-maleja-pastel/40 bg-white">
               <details className="group px-5 py-1" open>
                 <summary className="flex min-h-[52px] cursor-pointer list-none items-center gap-3 text-sm font-medium text-ink">
-                  <Truck className="h-4 w-4 text-maleja" /> Envíos y entregas
-                  <ChevronRight className="ml-auto h-4 w-4 text-ink-soft transition-transform group-open:rotate-90" />
+                  <Truck className="size-4 text-maleja" /> Envíos y entregas
+                  <ChevronRight className="ml-auto size-4 text-ink-soft transition-transform group-open:rotate-90" />
                 </summary>
                 <p className="whitespace-pre-line pb-4 text-sm leading-relaxed text-ink-soft">
                   {settings.delivery_info || "Coordinamos el envío o retiro por WhatsApp al confirmar tu pedido."}
@@ -128,8 +125,8 @@ export default async function ProductPage({ params }: { params: Params }) {
               </details>
               <details className="group px-5 py-1">
                 <summary className="flex min-h-[52px] cursor-pointer list-none items-center gap-3 text-sm font-medium text-ink">
-                  <CreditCard className="h-4 w-4 text-maleja" /> Formas de pago
-                  <ChevronRight className="ml-auto h-4 w-4 text-ink-soft transition-transform group-open:rotate-90" />
+                  <CreditCard className="size-4 text-maleja" /> Formas de pago
+                  <ChevronRight className="ml-auto size-4 text-ink-soft transition-transform group-open:rotate-90" />
                 </summary>
                 <ul className="space-y-1 pb-4 text-sm text-ink-soft">
                   {settings.payment_methods

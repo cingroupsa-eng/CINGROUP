@@ -56,14 +56,14 @@ export default async function ProductsAdminPage({ searchParams }: { searchParams
         description="Cargá, editá y publicá las prendas de tu tienda."
         actions={
           <Link href="/admin/productos/nuevo" className={buttonStyles("primary", "md")}>
-            <Plus className="h-4 w-4" /> Nueva prenda
+            <Plus className="size-4" /> Nueva prenda
           </Link>
         }
       />
 
       <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-center">
         <form className="relative flex-1" action="/admin/productos">
-          <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" />
+          <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-ink-soft" />
           <input
             name="q"
             defaultValue={q}
@@ -114,7 +114,7 @@ export default async function ProductsAdminPage({ searchParams }: { searchParams
             {q || estado !== "todos" || categoria ? "Probá con otros filtros." : "Empezá cargando tu primera prenda con fotos, precio y tallas."}
           </p>
           <Link href="/admin/productos/nuevo" className={buttonStyles("primary", "md", "mt-6")}>
-            <Plus className="h-4 w-4" /> Cargar prenda
+            <Plus className="size-4" /> Cargar prenda
           </Link>
         </div>
       ) : (
@@ -152,8 +152,8 @@ export default async function ProductsAdminPage({ searchParams }: { searchParams
                   <PublishToggle id={p.id} value={p.is_published} />
                 </div>
                 <FeaturedToggle id={p.id} value={p.is_featured} />
-                <Link href={`/admin/productos/${p.id}`} aria-label={`Editar ${p.name}`} className="grid h-11 w-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja">
-                  <Pencil className="h-4 w-4" />
+                <Link href={`/admin/productos/${p.id}`} aria-label={`Editar ${p.name}`} className="grid size-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja">
+                  <Pencil className="size-4" />
                 </Link>
               </li>
             );

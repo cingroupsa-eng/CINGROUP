@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useDialogA11y } from "@/lib/hooks/useDialogA11y";
 import { AnimatePresence, motion, type PanInfo } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 import type { ProductImage } from "@/lib/types";
@@ -25,20 +26,18 @@ export function ProductGallery({ images, name, badges }: { images: ProductImage[
     [count, index]
   );
 
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  useDialogA11y(lightbox, lightboxRef, () => setLightbox(false), closeRef);
+
   useEffect(() => {
     if (!lightbox) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightbox(false);
       if (e.key === "ArrowRight") go(index + 1);
       if (e.key === "ArrowLeft") go(index - 1);
     };
     window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [lightbox, go, index]);
 
   const onDragEnd = (_: unknown, info: PanInfo) => {
@@ -70,7 +69,7 @@ export function ProductGallery({ images, name, badges }: { images: ProductImage[
               aria-label={`Ver foto ${i + 1}`}
               aria-current={i === index}
               className={cn(
-                "relative aspect-[3/4] w-full shrink-0 overflow-hidden rounded-2xl ring-1 transition-all duration-300 ease-lux",
+                "relative aspect-[3/4] w-full shrink-0 overflow-hidden rounded-2xl ring-1 transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-lux",
                 i === index ? "ring-2 ring-maleja" : "opacity-70 ring-maleja-pastel/40 hover:opacity-100"
               )}
             >
@@ -124,9 +123,9 @@ export function ProductGallery({ images, name, badges }: { images: ProductImage[
             type="button"
             onClick={() => setLightbox(true)}
             aria-label="Ampliar foto"
-            className="absolute right-3 top-3 z-10 grid h-11 w-11 place-items-center rounded-full bg-white/85 text-ink backdrop-blur transition hover:text-maleja lg:opacity-0 lg:group-hover:opacity-100"
+            className="absolute right-3 top-3 z-10 grid size-11 place-items-center rounded-full bg-white/85 text-ink backdrop-blur transition hover:text-maleja lg:opacity-0 lg:group-hover:opacity-100"
           >
-            <ZoomIn className="h-4 w-4" />
+            <ZoomIn className="size-4" />
           </button>
 
           {count > 1 && (
@@ -135,17 +134,17 @@ export function ProductGallery({ images, name, badges }: { images: ProductImage[
                 type="button"
                 onClick={() => go(index - 1)}
                 aria-label="Foto anterior"
-                className="absolute left-3 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-ink opacity-0 backdrop-blur transition group-hover:opacity-100 lg:grid"
+                className="absolute left-3 top-1/2 z-10 hidden size-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-ink opacity-0 backdrop-blur transition group-hover:opacity-100 lg:grid"
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="size-5" />
               </button>
               <button
                 type="button"
                 onClick={() => go(index + 1)}
                 aria-label="Foto siguiente"
-                className="absolute right-3 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-ink opacity-0 backdrop-blur transition group-hover:opacity-100 lg:grid"
+                className="absolute right-3 top-1/2 z-10 hidden size-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-ink opacity-0 backdrop-blur transition group-hover:opacity-100 lg:grid"
               >
-                <ChevronRight className="h-5 w-5" />
+                <ChevronRight className="size-5" />
               </button>
               <div className="absolute inset-x-0 bottom-4 z-10 flex justify-center gap-1.5 lg:hidden">
                 {images.map((img, i) => (
@@ -154,9 +153,10 @@ export function ProductGallery({ images, name, badges }: { images: ProductImage[
                     type="button"
                     onClick={() => go(i)}
                     aria-label={`Foto ${i + 1}`}
+                    aria-current={i === index}
                     className="grid h-6 place-items-center px-0.5"
                   >
-                    <span className={cn("block h-1.5 rounded-full transition-all duration-300", i === index ? "w-6 bg-white" : "w-1.5 bg-white/60")} />
+                    <span className={cn("block h-1.5 w-6 rounded-full transition-[transform,background-color] duration-300 ease-lux", i === index ? "bg-white" : "scale-x-[0.25] bg-white/60")} />
                   </button>
                 ))}
               </div>
@@ -189,7 +189,10 @@ export function ProductGallery({ images, name, badges }: { images: ProductImage[
       <AnimatePresence>
         {lightbox && (
           <motion.div
-            className="fixed inset-0 z-[80] flex flex-col bg-ink/95"
+            ref={lightboxRef}
+            tabIndex={-1}
+            data-dialog-panel=""
+            className="fixed inset-0 z-lightbox flex flex-col bg-ink/95 outline-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -201,8 +204,8 @@ export function ProductGallery({ images, name, badges }: { images: ProductImage[
               <span className="text-sm tabular-nums text-white/70">
                 {index + 1} / {count}
               </span>
-              <button type="button" onClick={() => setLightbox(false)} aria-label="Cerrar" className="grid h-11 w-11 place-items-center rounded-full hover:bg-white/10">
-                <X className="h-6 w-6" />
+              <button ref={closeRef} type="button" onClick={() => setLightbox(false)} aria-label="Cerrar" className="grid size-11 place-items-center rounded-full hover:bg-white/10">
+                <X className="size-6" />
               </button>
             </div>
             <div className="relative flex-1 overflow-auto">
@@ -213,18 +216,18 @@ export function ProductGallery({ images, name, badges }: { images: ProductImage[
                 drag={count > 1 ? "x" : false}
                 dragConstraints={{ left: 0, right: 0 }}
                 onDragEnd={onDragEnd}
-                className="relative mx-auto h-full w-full max-w-4xl touch-pinch-zoom"
+                className="relative mx-auto size-full max-w-4xl touch-pinch-zoom"
               >
                 <Image src={current.url} alt={current.alt_text || name} fill sizes="100vw" className="object-contain" quality={90} />
               </motion.div>
             </div>
             {count > 1 && (
               <div className="flex justify-center gap-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4">
-                <button type="button" onClick={() => go(index - 1)} aria-label="Anterior" className="grid h-12 w-12 place-items-center rounded-full bg-white/10 text-white">
-                  <ChevronLeft className="h-5 w-5" />
+                <button type="button" onClick={() => go(index - 1)} aria-label="Anterior" className="grid size-12 place-items-center rounded-full bg-white/10 text-white">
+                  <ChevronLeft className="size-5" />
                 </button>
-                <button type="button" onClick={() => go(index + 1)} aria-label="Siguiente" className="grid h-12 w-12 place-items-center rounded-full bg-white/10 text-white">
-                  <ChevronRight className="h-5 w-5" />
+                <button type="button" onClick={() => go(index + 1)} aria-label="Siguiente" className="grid size-12 place-items-center rounded-full bg-white/10 text-white">
+                  <ChevronRight className="size-5" />
                 </button>
               </div>
             )}

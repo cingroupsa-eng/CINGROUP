@@ -15,18 +15,16 @@ export function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Consultar por WhatsApp"
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ delay: 1.2, type: "spring", stiffness: 260, damping: 18 }}
-      whileHover={{ scale: 1.06 }}
-      whileTap={{ scale: 0.94 }}
-      className="group fixed bottom-[calc(76px+env(safe-area-inset-bottom))] right-4 z-30 flex h-14 items-center gap-2 rounded-full bg-ok pl-4 pr-4 text-white shadow-[0_14px_40px_-12px_rgba(19,184,106,0.7)] lg:bottom-8 lg:right-8"
+      // Nunca desde scale(0): entra desde 0.8 + opacidad.
+      initial={{ opacity: 0, transform: "scale(0.8)" }}
+      animate={{ opacity: 1, transform: "scale(1)" }}
+      transition={{ delay: 1, duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+      className="fixed bottom-[calc(76px+env(safe-area-inset-bottom))] right-4 z-float flex h-14 items-center gap-2 rounded-full bg-ok px-4 text-white shadow-lg transition-[transform,filter] duration-press ease-lux hover:brightness-110 active:scale-[0.95] lg:bottom-8 lg:right-8"
     >
-      <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-ok/30 [animation-duration:2.6s]" />
-      <WhatsAppIcon className="h-6 w-6" />
-      <span className="hidden max-w-0 overflow-hidden whitespace-nowrap text-sm font-medium transition-all duration-500 ease-lux group-hover:max-w-[160px] lg:inline">
-        ¿Te ayudamos?
-      </span>
+      {/* Pulso de atención: sólo 3 veces, no en bucle infinito. */}
+      <span aria-hidden className="absolute inset-0 -z-10 animate-ping rounded-full bg-ok/30 [animation-duration:2.4s] [animation-iteration-count:3]" />
+      <WhatsAppIcon className="size-6" />
+      <span className="hidden text-sm font-medium lg:inline">¿Te ayudamos?</span>
     </motion.a>
   );
 }

@@ -48,7 +48,6 @@ export function CheckoutForm({ onSuccess, onBack }: { onSuccess: (s: CheckoutSuc
     register,
     handleSubmit,
     watch,
-    setValue,
     formState: { errors },
   } = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
@@ -136,52 +135,49 @@ export function CheckoutForm({ onSuccess, onBack }: { onSuccess: (s: CheckoutSuc
         </Field>
       </div>
 
-      <fieldset className="space-y-3">
-        <legend className="eyebrow mb-3">Método de pago</legend>
+      <fieldset className="space-y-3" aria-describedby={errors.paymentMethod ? "payment-error" : undefined}>
+        <legend className="eyebrow mb-3">
+          Método de pago <span className="text-maleja">*</span>
+        </legend>
         <div className="grid gap-3">
           {methods.map((m) => {
             const active = payment === m.id;
             const Icon = m.id === "transferencia" ? Building2 : Banknote;
             return (
-              <button
+              <label
                 key={m.id}
-                type="button"
-                role="radio"
-                aria-checked={active}
-                onClick={() => setValue("paymentMethod", m.id, { shouldValidate: true })}
                 className={cn(
-                  "flex min-h-[60px] items-center gap-4 rounded-2xl border px-4 py-3 text-left transition-all duration-300 ease-lux",
-                  active
-                    ? "border-maleja bg-maleja-canvas ring-4 ring-maleja/10"
-                    : "border-maleja-pastel/60 bg-white hover:border-maleja-pastel"
+                  "flex min-h-[60px] cursor-pointer items-center gap-4 rounded-2xl border px-4 py-3 text-left",
+                  "transition-[background-color,border-color,box-shadow,transform] duration-200 ease-lux active:scale-[0.99]",
+                  "has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-maleja",
+                  active ? "border-maleja bg-maleja-canvas ring-4 ring-maleja/10" : "border-maleja-pastel/60 bg-white hover:border-maleja-pastel"
                 )}
               >
-                <span className={cn("grid h-10 w-10 place-items-center rounded-full", active ? "bg-maleja text-white" : "bg-maleja-canvas text-maleja")}>
-                  <Icon className="h-5 w-5" strokeWidth={1.6} />
+                <input type="radio" value={m.id} className="sr-only" {...register("paymentMethod")} />
+                <span aria-hidden className={cn("grid size-10 shrink-0 place-items-center rounded-full", active ? "bg-maleja text-white" : "bg-maleja-canvas text-maleja")}>
+                  <Icon className="size-5" strokeWidth={1.6} />
                 </span>
                 <span className="flex-1">
                   <span className="block text-sm font-medium text-ink">{m.label}</span>
-                  {m.details ? (
-                    <span className="block whitespace-pre-line text-xs text-ink-soft">{m.details}</span>
-                  ) : (
-                    <span className="block text-xs text-ink-soft">
-                      {m.id === "transferencia" ? "Te enviamos los datos bancarios por WhatsApp." : "Abonás al recibir o retirar tu pedido."}
-                    </span>
-                  )}
+                  <span className="block whitespace-pre-line text-xs text-ink-soft">
+                    {m.details || (m.id === "transferencia" ? "Te enviamos los datos bancarios por WhatsApp." : "Abonás al recibir o retirar tu pedido.")}
+                  </span>
                 </span>
                 <span
-                  className={cn(
-                    "grid h-5 w-5 place-items-center rounded-full border transition",
-                    active ? "border-maleja bg-maleja text-white" : "border-ink/20"
-                  )}
+                  aria-hidden
+                  className={cn("grid size-5 shrink-0 place-items-center rounded-full border transition-colors", active ? "border-maleja bg-maleja text-white" : "border-ink/20")}
                 >
-                  {active && <Check className="h-3 w-3" strokeWidth={3} />}
+                  {active && <Check className="size-3" strokeWidth={3} />}
                 </span>
-              </button>
+              </label>
             );
           })}
         </div>
-        {errors.paymentMethod && <p className="text-xs font-medium text-red-600">{errors.paymentMethod.message}</p>}
+        {errors.paymentMethod && (
+          <p id="payment-error" role="alert" className="text-xs font-medium text-red-600">
+            {errors.paymentMethod.message}
+          </p>
+        )}
       </fieldset>
 
       <Field label="Observaciones (opcional)" htmlFor="notes" hint="Dirección de entrega, horario preferido, consultas…" error={errors.notes?.message}>
@@ -190,23 +186,23 @@ export function CheckoutForm({ onSuccess, onBack }: { onSuccess: (s: CheckoutSuc
 
       {serverError && (
         <motion.div
-          initial={{ opacity: 0, y: -6 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           role="alert"
           className="flex gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
         >
-          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+          <AlertCircle className="mt-0.5 size-4 shrink-0" />
           <span>{serverError}</span>
         </motion.div>
       )}
 
       <div className="space-y-3 pb-4">
         <Button type="submit" variant="whatsapp" size="lg" className="w-full" loading={pending}>
-          {!pending && <WhatsAppIcon className="h-5 w-5" />}
+          {!pending && <WhatsAppIcon className="size-5" />}
           {pending ? "Registrando pedido…" : "Enviar pedido por WhatsApp"}
         </Button>
         <p className="flex items-center justify-center gap-1.5 text-center text-[11px] text-ink-soft">
-          <Lock className="h-3 w-3" /> Verificamos precios y stock antes de registrar tu pedido.
+          <Lock className="size-3" /> Verificamos precios y stock antes de registrar tu pedido.
         </p>
       </div>
     </form>

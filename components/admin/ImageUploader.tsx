@@ -83,14 +83,14 @@ export function ImageUploader({
         tabIndex={0}
         onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && inputRef.current?.click()}
         className={cn(
-          "flex cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed px-6 py-10 text-center transition-all duration-300 ease-lux",
+          "flex cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed px-6 py-10 text-center transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-lux",
           dragging ? "scale-[1.01] border-maleja bg-maleja-canvas" : "border-maleja-pastel/70 bg-white hover:border-maleja hover:bg-maleja-canvas/50"
         )}
       >
         {uploading > 0 ? (
-          <Loader2 className="h-8 w-8 animate-spin text-maleja" />
+          <Loader2 className="size-8 animate-spin text-maleja" />
         ) : (
-          <UploadCloud className="h-8 w-8 text-maleja" strokeWidth={1.5} />
+          <UploadCloud className="size-8 text-maleja" strokeWidth={1.5} />
         )}
         <p className="mt-3 text-sm font-medium text-ink">
           {uploading > 0 ? `Subiendo ${uploading} foto(s)…` : "Arrastrá tus fotos aquí o tocá para elegirlas"}
@@ -125,20 +125,20 @@ export function ImageUploader({
                   <Image src={img.url} alt={img.alt_text || ""} fill sizes="200px" className="object-cover" />
                   {i === 0 && (
                     <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-maleja px-2 py-0.5 text-[10px] font-semibold text-white">
-                      <Star className="h-3 w-3 fill-white" /> Portada
+                      <Star className="size-3 fill-white" /> Portada
                     </span>
                   )}
                   <div className="absolute inset-x-2 bottom-2 flex justify-between">
                     <div className="flex gap-1">
-                      <button type="button" onClick={() => move(i, i - 1)} disabled={i === 0} aria-label="Mover a la izquierda" className="grid h-9 w-9 place-items-center rounded-full bg-white/90 text-ink shadow disabled:opacity-30">
-                        <ArrowLeft className="h-4 w-4" />
+                      <button type="button" onClick={() => move(i, i - 1)} disabled={i === 0} aria-label="Mover a la izquierda" className="grid size-9 place-items-center rounded-full bg-white/90 text-ink shadow disabled:opacity-30">
+                        <ArrowLeft className="size-4" />
                       </button>
-                      <button type="button" onClick={() => move(i, i + 1)} disabled={i === value.length - 1} aria-label="Mover a la derecha" className="grid h-9 w-9 place-items-center rounded-full bg-white/90 text-ink shadow disabled:opacity-30">
-                        <ArrowRight className="h-4 w-4" />
+                      <button type="button" onClick={() => move(i, i + 1)} disabled={i === value.length - 1} aria-label="Mover a la derecha" className="grid size-9 place-items-center rounded-full bg-white/90 text-ink shadow disabled:opacity-30">
+                        <ArrowRight className="size-4" />
                       </button>
                     </div>
-                    <button type="button" onClick={() => onChange(value.filter((_, j) => j !== i))} aria-label="Eliminar foto" className="grid h-9 w-9 place-items-center rounded-full bg-white/90 text-red-600 shadow">
-                      <Trash2 className="h-4 w-4" />
+                    <button type="button" onClick={() => onChange(value.filter((_, j) => j !== i))} aria-label="Eliminar foto" className="grid size-9 place-items-center rounded-full bg-white/90 text-red-600 shadow">
+                      <Trash2 className="size-4" />
                     </button>
                   </div>
                 </div>
@@ -159,7 +159,7 @@ export function ImageUploader({
                 onClick={() => inputRef.current?.click()}
                 className="grid aspect-[3/4] w-full place-items-center rounded-2xl border-2 border-dashed border-maleja-pastel/70 text-maleja transition hover:border-maleja hover:bg-maleja-canvas"
               >
-                <ImagePlus className="h-6 w-6" />
+                <ImagePlus className="size-6" />
               </button>
             </li>
           )}
@@ -221,12 +221,12 @@ export function SingleImageUpload({
           <Image src={value} alt="" fill sizes="128px" className="object-cover" />
         ) : (
           <span className="absolute inset-0 grid place-items-center text-maleja">
-            {loading ? <Loader2 className="h-6 w-6 animate-spin" /> : <ImagePlus className="h-6 w-6" />}
+            {loading ? <Loader2 className="size-6 animate-spin" /> : <ImagePlus className="size-6" />}
           </span>
         )}
         {loading && value && (
           <span className="absolute inset-0 grid place-items-center bg-white/70">
-            <Loader2 className="h-6 w-6 animate-spin text-maleja" />
+            <Loader2 className="size-6 animate-spin text-maleja" />
           </span>
         )}
       </button>

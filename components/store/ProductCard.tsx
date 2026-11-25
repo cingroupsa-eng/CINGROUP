@@ -16,10 +16,10 @@ export function ProductCard({ product, index = 0, priority }: { product: Product
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, transform: "translateY(16px)" }}
+      whileInView={{ opacity: 1, transform: "translateY(0px)" }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.6, delay: (index % 4) * 0.06, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, delay: (index % 4) * 0.05, ease: [0.23, 1, 0.32, 1] }}
       className="group"
     >
       <Link href={`/producto/${product.slug}`} className="block" aria-label={product.name}>
@@ -33,7 +33,7 @@ export function ProductCard({ product, index = 0, priority }: { product: Product
                 priority={priority}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 className={cn(
-                  "object-cover transition-all duration-700 ease-lux group-hover:scale-[1.04]",
+                  "object-cover transition-[transform,opacity] duration-500 ease-lux group-hover:scale-[1.03]",
                   img2 && "group-hover:opacity-0",
                   soldOut && "grayscale-[40%]"
                 )}
@@ -44,7 +44,7 @@ export function ProductCard({ product, index = 0, priority }: { product: Product
                   alt={img2.alt_text || product.name}
                   fill
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className="object-cover opacity-0 transition-all duration-700 ease-lux group-hover:scale-[1.04] group-hover:opacity-100"
+                  className="object-cover opacity-0 transition-[transform,opacity] duration-500 ease-lux group-hover:scale-[1.03] group-hover:opacity-100"
                 />
               )}
             </>
@@ -71,7 +71,7 @@ export function ProductCard({ product, index = 0, priority }: { product: Product
             </div>
           )}
           {!soldOut && (
-            <div className="absolute inset-x-3 bottom-3 translate-y-3 rounded-full bg-white/90 py-2.5 text-center text-[11px] font-medium uppercase tracking-[0.18em] text-ink opacity-0 backdrop-blur transition-all duration-500 ease-lux group-hover:translate-y-0 group-hover:opacity-100 max-lg:hidden">
+            <div className="absolute inset-x-3 bottom-3 translate-y-3 rounded-full bg-white/90 py-2.5 text-center text-[11px] font-medium uppercase tracking-[0.18em] text-ink opacity-0 backdrop-blur transition-[transform,opacity] duration-300 ease-lux group-hover:translate-y-0 group-hover:opacity-100 max-lg:hidden">
               Ver prenda
             </div>
           )}
@@ -85,7 +85,7 @@ export function ProductCard({ product, index = 0, priority }: { product: Product
             {colors.length > 0 && (
               <div className="flex shrink-0 -space-x-1" aria-label={`${colors.length} colores`}>
                 {colors.slice(0, 4).map(([name, hex]) => (
-                  <span key={name} title={name} className="h-3 w-3 rounded-full ring-2 ring-white" style={{ backgroundColor: hex }} />
+                  <span key={name} title={name} className="size-3 rounded-full ring-2 ring-white" style={{ backgroundColor: hex }} />
                 ))}
                 {colors.length > 4 && <span className="pl-2 text-[10px] text-ink-soft">+{colors.length - 4}</span>}
               </div>

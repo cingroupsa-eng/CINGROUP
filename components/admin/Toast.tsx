@@ -18,7 +18,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <Ctx.Provider value={{ toast }}>
       {children}
-      <div className="pointer-events-none fixed inset-x-0 bottom-[calc(80px+env(safe-area-inset-bottom))] z-[90] flex flex-col items-center gap-2 px-4 lg:bottom-6 lg:items-end lg:pr-6">
+      <div className="pointer-events-none fixed inset-x-0 bottom-[calc(80px+env(safe-area-inset-bottom))] z-toast flex flex-col items-center gap-2 px-4 lg:bottom-6 lg:items-end lg:pr-6">
         <AnimatePresence>
           {toasts.map((t) => (
             <motion.div
@@ -34,10 +34,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 t.type === "success" ? "bg-ink text-white ring-ink" : "bg-white text-red-700 ring-red-200"
               )}
             >
-              {t.type === "success" ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-ok" /> : <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />}
+              {t.type === "success" ? <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-ok" /> : <AlertCircle className="mt-0.5 size-4 shrink-0" />}
               <span className="flex-1">{t.message}</span>
               <button type="button" aria-label="Cerrar" onClick={() => setToasts((x) => x.filter((y) => y.id !== t.id))} className="-m-1 p-1 opacity-60 hover:opacity-100">
-                <X className="h-4 w-4" />
+                <X className="size-4" />
               </button>
             </motion.div>
           ))}

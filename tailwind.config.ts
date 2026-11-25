@@ -1,6 +1,8 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  // Hover sólo en dispositivos con puntero real (evita "hover pegado" en táctiles).
+  future: { hoverOnlyWhenSupported: true },
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   theme: {
     extend: {
@@ -22,9 +24,22 @@ const config: Config = {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       transitionTimingFunction: {
-        lux: "cubic-bezier(0.22, 1, 0.36, 1)",
+        // ease-out fuerte para entradas y feedback de UI
+        lux: "cubic-bezier(0.23, 1, 0.32, 1)",
+        // curva tipo iOS para paneles y drawers
+        drawer: "cubic-bezier(0.32, 0.72, 0, 1)",
       },
-      transitionDuration: { DEFAULT: "300ms" },
+      transitionDuration: { DEFAULT: "200ms", press: "160ms" },
+      // Escala fija de capas (sin z-index arbitrarios)
+      zIndex: {
+        float: "30",
+        header: "40",
+        overlay: "60",
+        search: "70",
+        lightbox: "80",
+        toast: "90",
+        skip: "100",
+      },
       boxShadow: {
         soft: "0 10px 40px -12px rgba(240, 0, 114, 0.14)",
         card: "0 2px 20px -6px rgba(33, 24, 32, 0.08)",

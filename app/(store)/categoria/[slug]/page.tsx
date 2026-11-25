@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCategories, getCategoryBySlug } from "@/lib/data";
-import { CatalogView, type SearchParams } from "@/components/store/CatalogView";
+import { CatalogView, parseFilters, type SearchParams } from "@/components/store/CatalogView";
+import { pageMeta, paginatedPath } from "@/lib/seo";
 
 type Params = Promise<{ slug: string }>;
 
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const { slug } = await params;
+export async function generateMetadata({ params, searchParams }: { params: Params; searchParams: Promise<SearchParams> }): Promise<Metadata> {
+  const [{ slug }, sp] = await Promise.all([params, searchParams]);
   const cat = await getCategoryBySlug(slug);
-  if (!cat) return { title: "Categoría" };
-  return {
-    title: cat.name,
+  if (!cat) return { title: "Categoría no encontrada", robots: { index: false } };
+  const { page = 1 } = parseFilters(sp);
+  return pageMeta({
+    title: page > 1 ? `${cat.name} — página ${page}` : cat.name,
     description: cat.description ?? `${cat.name} en EL BAZAR DE MALEJA. Pedí por WhatsApp con envíos a todo Paraguay.`,
-    alternates: { canonical: `/categoria/${cat.slug}` },
-    openGraph: cat.image_url ? { images: [cat.image_url] } : undefined,
-  };
+    path: paginatedPath(`/categoria/${cat.slug}`, page),
+    images: cat.image_url ? [{ url: cat.image_url, alt: cat.name }] : undefined,
+  });
 }
 
 export default async function CategoryPage({ params, searchParams }: { params: Params; searchParams: Promise<SearchParams> }) {

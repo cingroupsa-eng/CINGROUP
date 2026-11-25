@@ -5,6 +5,7 @@ import { ArrowLeft, Phone } from "lucide-react";
 import { z } from "zod";
 import { getAdminContext } from "@/lib/auth";
 import { StatusBadge } from "@/components/admin/StatusBadge";
+import { OrderTag } from "@/components/brand/OrderTag";
 import { OrderNotes, OrderStatusControl } from "@/components/admin/OrderControls";
 import { WhatsAppIcon } from "@/components/ui/SocialIcons";
 import { buttonStyles } from "@/components/ui/Button";
@@ -32,12 +33,13 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
   return (
     <div className="mx-auto max-w-5xl">
       <div className="mb-6 flex items-center gap-3">
-        <Link href="/admin/pedidos" aria-label="Volver" className="grid h-11 w-11 place-items-center rounded-full bg-white ring-1 ring-maleja-pastel/40 hover:text-maleja">
-          <ArrowLeft className="h-4 w-4" />
+        <Link href="/admin/pedidos" aria-label="Volver" className="grid size-11 place-items-center rounded-full bg-white ring-1 ring-maleja-pastel/40 hover:text-maleja">
+          <ArrowLeft className="size-4" />
         </Link>
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="font-serif text-3xl sm:text-4xl">{order.order_number}</h1>
+            <h1 className="sr-only">Pedido {order.order_number}</h1>
+            <OrderTag number={order.order_number} size="lg" />
             <StatusBadge status={order.status} />
           </div>
           <p className="text-xs text-ink-soft">Recibido el {formatDate(order.created_at)}</p>
@@ -115,10 +117,10 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
             </dl>
             <div className="mt-5 grid gap-2">
               <a href={waLink(order.customer_phone, msg)} target="_blank" rel="noopener noreferrer" className={buttonStyles("whatsapp", "md", "w-full")}>
-                <WhatsAppIcon className="h-4 w-4" /> Escribir por WhatsApp
+                <WhatsAppIcon className="size-4" /> Escribir por WhatsApp
               </a>
               <a href={`tel:+${order.customer_phone}`} className={buttonStyles("outline", "md", "w-full")}>
-                <Phone className="h-4 w-4" /> Llamar
+                <Phone className="size-4" /> Llamar
               </a>
             </div>
           </section>

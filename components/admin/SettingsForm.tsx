@@ -83,7 +83,7 @@ export function SettingsForm({ settings }: { settings: StoreSettings }) {
       <Section title="WhatsApp de la tienda" description="Es el número que recibe los pedidos. Sin este dato, la tienda no puede enviar pedidos.">
         {!settings.whatsapp_number && (
           <div className="flex gap-3 rounded-2xl bg-amber-50 p-4 text-sm text-amber-800 ring-1 ring-amber-200">
-            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+            <AlertTriangle className="mt-0.5 size-4 shrink-0" />
             <span>
               <strong>Configuración pendiente:</strong> los pedidos online están deshabilitados hasta que cargues el número.
             </span>
@@ -96,13 +96,13 @@ export function SettingsForm({ settings }: { settings: StoreSettings }) {
           error={errors.whatsapp_number?.message}
         >
           <div className="relative">
-            <WhatsAppIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ok" />
+            <WhatsAppIcon className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-ok" />
             <Input id="wa" type="tel" inputMode="tel" placeholder="595981123456" className="pl-11" invalid={!!errors.whatsapp_number} {...register("whatsapp_number")} />
           </div>
         </Field>
         {waNormalized && (
           <p className="flex items-center gap-2 text-sm text-ok">
-            <CheckCircle2 className="h-4 w-4" /> Se usará: {prettyPhone(waNormalized)} ·{" "}
+            <CheckCircle2 className="size-4" /> Se usará: {prettyPhone(waNormalized)} ·{" "}
             <a href={`https://wa.me/${waNormalized}`} target="_blank" rel="noopener noreferrer" className="underline">
               probar enlace
             </a>

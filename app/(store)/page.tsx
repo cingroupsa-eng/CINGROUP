@@ -8,6 +8,9 @@ import { SectionHeading } from "@/components/store/SectionHeading";
 import { JsonLd } from "@/components/store/JsonLd";
 import { BRAND, SITE_URL } from "@/lib/constants";
 import { isSafeHttpUrl } from "@/lib/utils";
+import { pageMeta } from "@/lib/seo";
+
+export const metadata = pageMeta({ description: BRAND.description, path: "/" });
 
 export const revalidate = 120;
 

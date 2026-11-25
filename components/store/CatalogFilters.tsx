@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { Check, SlidersHorizontal, X } from "lucide-react";
 import { Sheet } from "@/components/ui/Sheet";
 import { Button } from "@/components/ui/Button";
@@ -54,7 +54,7 @@ function FilterBody({
                   onClick={() => toggle("sizes", s)}
                   aria-pressed={on}
                   className={cn(
-                    "min-h-[44px] min-w-[44px] rounded-full border px-4 text-sm transition-all duration-300 ease-lux",
+                    "min-h-[44px] min-w-[44px] rounded-full border px-4 text-sm transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-lux",
                     on ? "border-ink bg-ink text-white" : "border-maleja-pastel/60 bg-white text-ink hover:border-maleja"
                   )}
                 >
@@ -85,12 +85,12 @@ function FilterBody({
                 >
                   <span
                     className={cn(
-                      "grid h-9 w-9 place-items-center rounded-full ring-1 ring-ink/10 transition-all duration-300 ease-lux",
+                      "grid size-9 place-items-center rounded-full ring-1 ring-ink/10 transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-lux",
                       on && "ring-2 ring-maleja ring-offset-2"
                     )}
                     style={{ backgroundColor: c.hex }}
                   >
-                    {on && <Check className="h-4 w-4 text-white mix-blend-difference" />}
+                    {on && <Check className="size-4 text-white mix-blend-difference" />}
                   </span>
                   <span className="max-w-[64px] truncate text-[11px] text-ink-soft">{c.name}</span>
                 </button>
@@ -131,10 +131,6 @@ export function CatalogFilters({ options, total }: { options: Options; total: nu
   const [open, setOpen] = useState(false);
   const [pending, startTransition] = useTransition();
 
-  const key = JSON.stringify(current);
-  useEffect(() => {
-    setDraft(JSON.parse(key));
-  }, [key]);
 
   const apply = (d = draft) => {
     const p = new URLSearchParams();
@@ -162,9 +158,11 @@ export function CatalogFilters({ options, total }: { options: Options; total: nu
           <button
             type="button"
             onClick={() => setOpen(true)}
+            aria-haspopup="dialog"
+            aria-expanded={open}
             className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-maleja-pastel/60 bg-white px-4 text-sm font-medium text-ink transition hover:border-maleja lg:hidden"
           >
-            <SlidersHorizontal className="h-4 w-4" /> Filtrar
+            <SlidersHorizontal className="size-4" /> Filtrar
             {activeCount > 0 && (
               <span className="grid h-5 min-w-5 place-items-center rounded-full bg-maleja px-1 text-[10px] text-white">{activeCount}</span>
             )}
@@ -190,8 +188,8 @@ export function CatalogFilters({ options, total }: { options: Options; total: nu
           {current.q && (
             <span className="inline-flex items-center gap-1 rounded-full bg-ink px-3 py-1.5 text-xs text-white">
               “{current.q}”
-              <button type="button" aria-label="Quitar búsqueda" onClick={() => apply({ ...current, q: "" })} className="-mr-1 grid h-6 w-6 place-items-center">
-                <X className="h-3 w-3" />
+              <button type="button" aria-label="Quitar búsqueda" onClick={() => apply({ ...current, q: "" })} className="-mr-1 grid size-6 place-items-center">
+                <X className="size-3" />
               </button>
             </span>
           )}
@@ -203,9 +201,9 @@ export function CatalogFilters({ options, total }: { options: Options; total: nu
                   type="button"
                   aria-label={`Quitar ${chip.l}`}
                   onClick={() => apply({ ...current, [chip.k]: current[chip.k].filter((x) => x !== chip.v) })}
-                  className="-mr-1 grid h-6 w-6 place-items-center"
+                  className="-mr-1 grid size-6 place-items-center"
                 >
-                  <X className="h-3 w-3" />
+                  <X className="size-3" />
                 </button>
               </span>
             )
@@ -213,8 +211,8 @@ export function CatalogFilters({ options, total }: { options: Options; total: nu
           {(current.min || current.max) && (
             <span className="inline-flex items-center gap-1 rounded-full bg-maleja-canvas px-3 py-1.5 text-xs text-ink ring-1 ring-maleja-pastel/60">
               Gs. {current.min ? formatThousands(Number(current.min)) : "0"} – {current.max ? formatThousands(Number(current.max)) : "∞"}
-              <button type="button" aria-label="Quitar precio" onClick={() => apply({ ...current, min: "", max: "" })} className="-mr-1 grid h-6 w-6 place-items-center">
-                <X className="h-3 w-3" />
+              <button type="button" aria-label="Quitar precio" onClick={() => apply({ ...current, min: "", max: "" })} className="-mr-1 grid size-6 place-items-center">
+                <X className="size-3" />
               </button>
             </span>
           )}
@@ -258,10 +256,6 @@ export function DesktopFilters({ options }: { options: Options }) {
   const pathname = usePathname();
   const current = useFilterState();
   const [draft, setDraft] = useState(current);
-  const key = JSON.stringify(current);
-  useEffect(() => {
-    setDraft(JSON.parse(key));
-  }, [key]);
 
   const apply = (d: typeof draft) => {
     const p = new URLSearchParams();

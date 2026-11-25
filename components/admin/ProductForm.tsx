@@ -12,6 +12,7 @@ import { Field, Input, Select, Switch, Textarea } from "@/components/ui/Field";
 import { ImageUploader } from "./ImageUploader";
 import { PriceInput } from "./PriceInput";
 import { useToast } from "./Toast";
+import { useConfirm } from "./ConfirmDialog";
 import { deleteProduct, saveProduct } from "@/lib/actions/admin";
 import { productSchema, type ProductFormInput, type ProductFormValues } from "@/lib/validations";
 import { SIZE_PRESETS } from "@/lib/constants";
@@ -69,6 +70,7 @@ export function ProductForm({
 }) {
   const router = useRouter();
   const toast = useToast();
+  const confirm = useConfirm();
   const [pending, start] = useTransition();
   const [deleting, startDelete] = useTransition();
   const [bulk, setBulk] = useState({ color: "", hex: "#111111", sizes: [] as string[], stock: 1 });
@@ -152,9 +154,15 @@ export function ProductForm({
     toast("error", firstError(errs) ?? "Revisá los campos marcados.");
   };
 
-  const onDelete = () => {
+  const onDelete = async () => {
     if (!product) return;
-    if (!confirm(`¿Eliminar "${product.name}"? Esta acción no se puede deshacer.`)) return;
+    const ok = await confirm({
+      title: `¿Eliminar «${product.name}»?`,
+      description: "Se borran la prenda, sus fotos y sus variantes. Esta acción no se puede deshacer. Los pedidos anteriores conservan su detalle.",
+      confirmLabel: "Eliminar prenda",
+      destructive: true,
+    });
+    if (!ok) return;
     startDelete(async () => {
       const r = await deleteProduct(product.id);
       if (!r.ok) return toast("error", r.error);
@@ -168,8 +176,8 @@ export function ProductForm({
     <form onSubmit={handleSubmit(onSubmit, onInvalid)} noValidate className="mx-auto max-w-6xl">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <Link href="/admin/productos" aria-label="Volver" className="grid h-11 w-11 place-items-center rounded-full bg-white ring-1 ring-maleja-pastel/40 hover:text-maleja">
-            <ArrowLeft className="h-4 w-4" />
+          <Link href="/admin/productos" aria-label="Volver" className="grid size-11 place-items-center rounded-full bg-white ring-1 ring-maleja-pastel/40 hover:text-maleja">
+            <ArrowLeft className="size-4" />
           </Link>
           <div>
             <h1 className="font-serif text-3xl leading-tight text-ink sm:text-4xl">{product ? "Editar prenda" : "Nueva prenda"}</h1>
@@ -179,7 +187,7 @@ export function ProductForm({
         <div className="flex gap-2">
           {product?.is_published && (
             <a href={`/producto/${product.slug}`} target="_blank" rel="noopener" className={buttonStyles("outline", "md")}>
-              <ExternalLink className="h-4 w-4" /> Ver en tienda
+              <ExternalLink className="size-4" /> Ver en tienda
             </a>
           )}
           <Button type="submit" loading={pending} className="hidden sm:inline-flex">
@@ -230,12 +238,12 @@ export function ProductForm({
 
           <Card title="Tallas, colores y stock" description="Cada combinación talla + color tiene su propio stock. Sin stock = no se puede pedir.">
             <div className="rounded-2xl bg-maleja-canvas p-4">
-              <button type="button" onClick={() => setShowBulk((s) => !s)} className="flex min-h-[40px] w-full items-center gap-2 text-left text-sm font-medium text-maleja">
-                <Wand2 className="h-4 w-4" /> Carga rápida: un color con varias tallas
+              <button type="button" onClick={() => setShowBulk((s) => !s)} aria-expanded={showBulk} aria-controls="bulk-panel" className="flex min-h-[40px] w-full items-center gap-2 text-left text-sm font-medium text-maleja">
+                <Wand2 className="size-4" /> Carga rápida: un color con varias tallas
               </button>
               <AnimatePresence initial={false}>
                 {showBulk && (
-                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                  <motion.div id="bulk-panel" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }} className="overflow-hidden">
                     <div className="space-y-4 pt-3">
                       <div className="flex flex-wrap gap-2">
                         {COLOR_PRESETS.map((c) => (
@@ -248,7 +256,7 @@ export function ProductForm({
                               bulk.color === c.name ? "ring-maleja" : "ring-maleja-pastel/50"
                             )}
                           >
-                            <span className="h-3.5 w-3.5 rounded-full ring-1 ring-ink/10" style={{ backgroundColor: c.hex }} />
+                            <span className="size-3.5 rounded-full ring-1 ring-ink/10" style={{ backgroundColor: c.hex }} />
                             {c.name}
                           </button>
                         ))}
@@ -260,7 +268,7 @@ export function ProductForm({
                           aria-label="Elegir color"
                           value={bulk.hex}
                           onChange={(e) => setBulk((b) => ({ ...b, hex: e.target.value.toUpperCase() }))}
-                          className="h-[50px] w-[50px] cursor-pointer rounded-2xl border border-maleja-pastel/60 bg-white p-1"
+                          className="size-[50px] cursor-pointer rounded-2xl border border-maleja-pastel/60 bg-white p-1"
                         />
                         <Input
                           type="number"
@@ -291,7 +299,7 @@ export function ProductForm({
                         })}
                       </div>
                       <Button type="button" variant="dark" size="sm" onClick={addBulk}>
-                        <Layers className="h-4 w-4" /> Agregar variantes
+                        <Layers className="size-4" /> Agregar variantes
                       </Button>
                     </div>
                   </motion.div>
@@ -349,7 +357,7 @@ export function ProductForm({
                           aria-label="Eliminar variante"
                           className="col-span-2 grid h-11 place-items-center rounded-2xl text-red-600 ring-1 ring-red-100 transition hover:bg-red-50 sm:col-span-1 sm:h-[50px]"
                         >
-                          <Trash2 className="h-4 w-4" />
+                          <Trash2 className="size-4" />
                         </button>
                       </div>
                     </motion.li>
@@ -366,7 +374,7 @@ export function ProductForm({
                 size="sm"
                 onClick={() => append({ id: "", size: "", color_name: "", color_hex: "#111111", stock: 0, sku: "" })}
               >
-                <Plus className="h-4 w-4" /> Agregar variante
+                <Plus className="size-4" /> Agregar variante
               </Button>
               <p className="text-sm text-ink-soft">
                 Stock total: <strong className="text-ink">{totalStock}</strong> unidades
@@ -456,7 +464,7 @@ export function ProductForm({
 
           {product && (
             <Button type="button" variant="danger" className="w-full" onClick={onDelete} loading={deleting}>
-              <Trash2 className="h-4 w-4" /> Eliminar prenda
+              <Trash2 className="size-4" /> Eliminar prenda
             </Button>
           )}
         </div>
@@ -464,7 +472,7 @@ export function ProductForm({
 
       <div className="h-20 sm:hidden" aria-hidden />
       {/* Barra de guardado móvil */}
-      <div className="fixed inset-x-0 bottom-[calc(58px+env(safe-area-inset-bottom))] z-20 border-t border-maleja-pastel/40 bg-white/95 px-4 py-3 backdrop-blur sm:hidden">
+      <div className="fixed inset-x-0 bottom-[calc(58px+env(safe-area-inset-bottom))] z-float border-t border-maleja-pastel/40 bg-white/95 px-4 py-3 backdrop-blur sm:hidden">
         <Button type="submit" loading={pending} className="w-full">
           {isDirty || !product ? "Guardar prenda" : "Guardar"}
         </Button>
