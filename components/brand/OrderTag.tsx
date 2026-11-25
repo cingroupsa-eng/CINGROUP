@@ -26,7 +26,7 @@ export function OrderTag({
         {
           ink: "bg-ink text-white",
           soft: "bg-maleja-pastel/45 text-ink",
-          fuchsia: "bg-maleja text-white",
+          fuchsia: "bg-maleja-deep text-white",
         }[tone],
         className
       )}

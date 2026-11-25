@@ -21,12 +21,12 @@ export function BottomNav() {
       className="fixed inset-x-0 bottom-0 z-header border-t border-maleja-pastel/40 bg-white/85 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden"
     >
       <div className="mx-auto flex max-w-md items-stretch">
-        <Link href="/" className={cn(item, pathname === "/" ? "text-maleja" : "text-ink-soft")}>
+        <Link href="/" className={cn(item, pathname === "/" ? "text-maleja-deep" : "text-ink-soft")}>
           {pathname === "/" && <motion.span layoutId="bn-dot" className="absolute top-1 size-1 rounded-full bg-maleja" />}
           <Home className="size-[21px]" strokeWidth={1.6} />
           Inicio
         </Link>
-        <button type="button" onClick={() => setMenuOpen(true)} aria-haspopup="dialog" aria-expanded={menuOpen} className={cn(item, pathname.startsWith("/categoria") ? "text-maleja" : "text-ink-soft")}>
+        <button type="button" onClick={() => setMenuOpen(true)} aria-haspopup="dialog" aria-expanded={menuOpen} className={cn(item, pathname.startsWith("/categoria") ? "text-maleja-deep" : "text-ink-soft")}>
           <LayoutGrid className="size-[21px]" strokeWidth={1.6} />
           Categorías
         </button>
@@ -34,7 +34,7 @@ export function BottomNav() {
           <Search className="size-[21px]" strokeWidth={1.6} />
           Buscar
         </button>
-        <Link href="/tienda" className={cn(item, pathname.startsWith("/tienda") || pathname.startsWith("/producto") ? "text-maleja" : "text-ink-soft")}>
+        <Link href="/tienda" className={cn(item, pathname.startsWith("/tienda") || pathname.startsWith("/producto") ? "text-maleja-deep" : "text-ink-soft")}>
           {pathname.startsWith("/tienda") && <motion.span layoutId="bn-dot" className="absolute top-1 size-1 rounded-full bg-maleja" />}
           <svg viewBox="0 0 24 24" className="size-[21px]" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
             <path d="M8.5 3 6 5.2 3 6.5l1.4 4 2.1-.6V21h11V9.9l2.1.6 1.4-4-3-1.3L15.5 3c-.6 1.5-1.9 2.4-3.5 2.4S9.1 4.5 8.5 3Z" strokeLinejoin="round" />
@@ -50,7 +50,7 @@ export function BottomNav() {
                 initial={{ opacity: 0, scale: 0.6 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ type: "spring", duration: 0.35, bounce: 0.3 }}
-                className="absolute -right-2.5 -top-1.5 grid h-[17px] min-w-[17px] place-items-center rounded-full bg-maleja px-1 text-[9.5px] font-semibold text-white"
+                className="absolute -right-2.5 -top-1.5 grid h-[17px] min-w-[17px] place-items-center rounded-full bg-maleja-deep px-1 text-[9.5px] font-semibold text-white"
               >
                 {count}
               </motion.span>

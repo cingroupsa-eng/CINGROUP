@@ -89,7 +89,7 @@ function SearchPanel() {
             className="container-lux flex h-full max-w-3xl flex-col pt-[max(1rem,env(safe-area-inset-top))]"
           >
             <form onSubmit={submit} className="flex items-center gap-2 border-b border-ink/15 pb-2 pt-4">
-              <Search className="size-5 shrink-0 text-maleja" />
+              <Search className="size-5 shrink-0 text-maleja-deep" />
               <input
                 ref={inputRef}
                 value={q}
@@ -124,7 +124,7 @@ function SearchPanel() {
                         key={c.id}
                         href={`/categoria/${c.slug}`}
                         onClick={close}
-                        className="min-h-[44px] rounded-full border border-maleja-pastel/60 bg-white px-5 py-2.5 text-sm text-ink transition hover:border-maleja hover:text-maleja"
+                        className="min-h-[44px] rounded-full border border-maleja-pastel/60 bg-white px-5 py-2.5 text-sm text-ink transition hover:border-maleja hover:text-maleja-deep"
                       >
                         {c.name}
                       </Link>
@@ -146,10 +146,10 @@ function SearchPanel() {
                           </span>
                           <span className="min-w-0 flex-1">
                             {r.category && <span className="block text-[11px] uppercase tracking-[0.18em] text-ink-soft">{r.category}</span>}
-                            <span className="block truncate font-serif text-xl text-ink group-hover:text-maleja">{r.name}</span>
+                            <span className="block truncate font-serif text-xl text-ink group-hover:text-maleja-deep">{r.name}</span>
                             <Price price={r.price} compareAt={r.compareAt} size="sm" />
                           </span>
-                          <ArrowRight className="size-4 text-ink-soft transition group-hover:translate-x-1 group-hover:text-maleja" />
+                          <ArrowRight className="size-4 text-ink-soft transition group-hover:translate-x-1 group-hover:text-maleja-deep" />
                         </Link>
                       </motion.li>
                     ))}
@@ -157,7 +157,7 @@ function SearchPanel() {
                   <button
                     type="button"
                     onClick={submit}
-                    className="mt-6 inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-maleja"
+                    className="mt-6 inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-maleja-deep"
                   >
                     Ver todos los resultados <ArrowRight className="size-4" />
                   </button>

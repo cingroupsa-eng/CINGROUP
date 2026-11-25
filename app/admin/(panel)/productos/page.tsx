@@ -131,7 +131,7 @@ export default async function ProductsAdminPage({ searchParams }: { searchParams
                   )}
                 </Link>
                 <div className="min-w-0 flex-1">
-                  <Link href={`/admin/productos/${p.id}`} className="block truncate font-medium text-ink hover:text-maleja">
+                  <Link href={`/admin/productos/${p.id}`} className="block truncate font-medium text-ink hover:text-maleja-deep">
                     {p.name}
                   </Link>
                   <p className="mt-0.5 truncate text-xs text-ink-soft">
@@ -152,7 +152,7 @@ export default async function ProductsAdminPage({ searchParams }: { searchParams
                   <PublishToggle id={p.id} value={p.is_published} />
                 </div>
                 <FeaturedToggle id={p.id} value={p.is_featured} />
-                <Link href={`/admin/productos/${p.id}`} aria-label={`Editar ${p.name}`} className="grid size-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja">
+                <Link href={`/admin/productos/${p.id}`} aria-label={`Editar ${p.name}`} className="grid size-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja-deep">
                   <Pencil className="size-4" />
                 </Link>
               </li>

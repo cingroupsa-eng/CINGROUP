@@ -39,7 +39,7 @@ export function MobileMenu() {
                 href={l.href}
                 className={cn(
                   "flex min-h-[52px] items-center justify-between rounded-2xl px-3 font-serif text-[22px] transition hover:bg-maleja-canvas",
-                  pathname === l.href && "text-maleja"
+                  pathname === l.href && "text-maleja-deep"
                 )}
               >
                 {l.label}
@@ -62,8 +62,8 @@ export function MobileMenu() {
                 href={`/categoria/${c.slug}`}
                 className={cn(
                   "flex min-h-[48px] items-center justify-between rounded-2xl px-3 text-[15px] transition hover:bg-maleja-canvas",
-                  pathname === `/categoria/${c.slug}` ? "font-medium text-maleja" : "text-ink",
-                  c.slug === "ofertas" && "text-maleja"
+                  pathname === `/categoria/${c.slug}` ? "font-medium text-maleja-deep" : "text-ink",
+                  c.slug === "ofertas" && "text-maleja-deep"
                 )}
               >
                 <span className="flex items-center gap-3">
@@ -84,7 +84,7 @@ export function MobileMenu() {
               href={waLink(settings.whatsapp_number, "¡Hola! Quisiera hacer una consulta 💕")}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex min-h-[44px] items-center gap-2 rounded-full bg-ok px-5 text-sm font-medium text-white"
+              className="mt-4 inline-flex min-h-[44px] items-center gap-2 rounded-full bg-ok-deep px-5 text-sm font-medium text-white"
             >
               <WhatsAppIcon className="size-4" /> Escribinos
               <ArrowUpRight className="size-4" />
@@ -101,7 +101,7 @@ export function MobileMenu() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="grid size-11 place-items-center rounded-full bg-white text-ink transition hover:text-maleja"
+                  className="grid size-11 place-items-center rounded-full bg-white text-ink transition hover:text-maleja-deep"
                 >
                   <Icon className="size-5" />
                 </a>

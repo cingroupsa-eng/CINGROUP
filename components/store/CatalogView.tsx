@@ -82,7 +82,7 @@ export async function CatalogView({
           href="/tienda"
           className={cn(
             "min-h-[40px] shrink-0 rounded-full border px-4 py-2 text-sm transition",
-            !categorySlug ? "border-ink bg-ink text-white" : "border-maleja-pastel/60 bg-white text-ink hover:border-maleja hover:text-maleja"
+            !categorySlug ? "border-ink bg-ink text-white" : "border-maleja-pastel/60 bg-white text-ink hover:border-maleja hover:text-maleja-deep"
           )}
         >
           Todo
@@ -95,7 +95,7 @@ export async function CatalogView({
               "min-h-[40px] shrink-0 rounded-full border px-4 py-2 text-sm transition",
               categorySlug === c.slug
                 ? "border-ink bg-ink text-white"
-                : "border-maleja-pastel/60 bg-white text-ink hover:border-maleja hover:text-maleja"
+                : "border-maleja-pastel/60 bg-white text-ink hover:border-maleja hover:text-maleja-deep"
             )}
           >
             {c.name}

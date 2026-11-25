@@ -33,7 +33,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
   return (
     <div className="mx-auto max-w-5xl">
       <div className="mb-6 flex items-center gap-3">
-        <Link href="/admin/pedidos" aria-label="Volver" className="grid size-11 place-items-center rounded-full bg-white ring-1 ring-maleja-pastel/40 hover:text-maleja">
+        <Link href="/admin/pedidos" aria-label="Volver" className="grid size-11 place-items-center rounded-full bg-white ring-1 ring-maleja-pastel/40 hover:text-maleja-deep">
           <ArrowLeft className="size-4" />
         </Link>
         <div>
@@ -63,7 +63,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
                   <div className="min-w-0">
                     <p className="font-medium text-ink">
                       {it.product_id ? (
-                        <Link href={`/admin/productos/${it.product_id}`} className="hover:text-maleja">
+                        <Link href={`/admin/productos/${it.product_id}`} className="hover:text-maleja-deep">
                           {it.product_name}
                         </Link>
                       ) : (

@@ -48,21 +48,21 @@ export default async function HomePage() {
         <>
           {home.newArrivals.length > 0 && (
             <section className="container-lux py-12 sm:py-16">
-              <SectionHeading eyebrow="Recién llegadas" title={<>Novedades <span className="italic text-maleja">de temporada</span></>} href="/tienda?orden=recientes" />
+              <SectionHeading eyebrow="Recién llegadas" title={<>Novedades <span className="italic text-maleja-deep">de temporada</span></>} href="/tienda?orden=recientes" />
               <ProductGrid products={home.newArrivals} priorityCount={2} />
             </section>
           )}
           {home.featured.length > 0 && (
             <section className="bg-white py-16 sm:py-20">
               <div className="container-lux">
-                <SectionHeading eyebrow="Selección Maleja" title={<>Nuestras <span className="italic text-maleja">favoritas</span></>} href="/tienda" />
+                <SectionHeading eyebrow="Selección Maleja" title={<>Nuestras <span className="italic text-maleja-deep">favoritas</span></>} href="/tienda" />
                 <ProductGrid products={home.featured} />
               </div>
             </section>
           )}
           {home.onSale.length > 0 && (
             <section className="container-lux py-12 sm:py-16">
-              <SectionHeading eyebrow="Precios especiales" title={<>Ofertas <span className="italic text-maleja">irresistibles</span></>} href="/categoria/ofertas" />
+              <SectionHeading eyebrow="Precios especiales" title={<>Ofertas <span className="italic text-maleja-deep">irresistibles</span></>} href="/categoria/ofertas" />
               <ProductGrid products={home.onSale} />
             </section>
           )}

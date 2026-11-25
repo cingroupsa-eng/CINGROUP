@@ -16,7 +16,7 @@ export function OrderSuccess({ data, onClose }: { data: CheckoutSuccess; onClose
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ type: "spring", duration: 0.5, bounce: 0.25, delay: 0.1 }}
-        className="relative grid size-24 place-items-center rounded-full bg-ok text-white shadow-[0_20px_50px_-15px_rgba(19,184,106,0.7)]"
+        className="relative grid size-24 place-items-center rounded-full bg-ok-deep text-white shadow-[0_20px_50px_-15px_rgba(19,184,106,0.7)]"
       >
         <Check className="size-11" strokeWidth={2.4} />
         <span aria-hidden className="absolute inset-0 animate-ping rounded-full bg-ok/25 [animation-iteration-count:2]" />

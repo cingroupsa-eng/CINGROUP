@@ -97,7 +97,7 @@ function SheetPanel({
               type="button"
               onClick={onClose}
               aria-label="Cerrar"
-              className="grid size-11 shrink-0 place-items-center rounded-full text-ink transition-[background-color,color,transform] duration-press ease-lux hover:bg-maleja-canvas hover:text-maleja active:scale-[0.95]"
+              className="grid size-11 shrink-0 place-items-center rounded-full text-ink transition-[background-color,color,transform] duration-press ease-lux hover:bg-maleja-canvas hover:text-maleja-deep active:scale-[0.95]"
             >
               <X className="size-5" />
             </button>

@@ -24,11 +24,11 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
       title={
         q ? (
           <>
-            “<span className="italic text-maleja">{q}</span>”
+            “<span className="italic text-maleja-deep">{q}</span>”
           </>
         ) : (
           <>
-            Toda la <span className="italic text-maleja">tienda</span>
+            Toda la <span className="italic text-maleja-deep">tienda</span>
           </>
         )
       }

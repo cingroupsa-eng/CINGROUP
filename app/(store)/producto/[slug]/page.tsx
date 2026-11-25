@@ -45,7 +45,7 @@ export default async function ProductPage({ params }: { params: Params }) {
 
   const badges = (
     <div className="flex flex-col items-start gap-1.5">
-      {off && <span className="rounded-full bg-maleja px-3 py-1 text-xs font-semibold text-white">-{off}%</span>}
+      {off && <span className="rounded-full bg-maleja-deep px-3 py-1 text-xs font-semibold text-white">-{off}%</span>}
       {product.is_new && (
         <span className="rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink">Nuevo</span>
       )}
@@ -77,16 +77,16 @@ export default async function ProductPage({ params }: { params: Params }) {
 
       <div className="container-lux pb-8 pt-4 sm:pt-8">
         <nav aria-label="Migas de pan" className="mb-5 flex items-center gap-1.5 overflow-hidden whitespace-nowrap text-xs text-ink-soft">
-          <Link href="/" className="hover:text-maleja">
+          <Link href="/" className="hover:text-maleja-deep">
             Inicio
           </Link>
           <ChevronRight className="size-3 shrink-0" />
           {product.category ? (
-            <Link href={`/categoria/${product.category.slug}`} className="hover:text-maleja">
+            <Link href={`/categoria/${product.category.slug}`} className="hover:text-maleja-deep">
               {product.category.name}
             </Link>
           ) : (
-            <Link href="/tienda" className="hover:text-maleja">
+            <Link href="/tienda" className="hover:text-maleja-deep">
               Tienda
             </Link>
           )}
@@ -116,7 +116,7 @@ export default async function ProductPage({ params }: { params: Params }) {
             <div className="mt-8 divide-y divide-maleja-pastel/40 rounded-3xl border border-maleja-pastel/40 bg-white">
               <details className="group px-5 py-1" open>
                 <summary className="flex min-h-[52px] cursor-pointer list-none items-center gap-3 text-sm font-medium text-ink">
-                  <Truck className="size-4 text-maleja" /> Envíos y entregas
+                  <Truck className="size-4 text-maleja-deep" /> Envíos y entregas
                   <ChevronRight className="ml-auto size-4 text-ink-soft transition-transform group-open:rotate-90" />
                 </summary>
                 <p className="whitespace-pre-line pb-4 text-sm leading-relaxed text-ink-soft">
@@ -125,7 +125,7 @@ export default async function ProductPage({ params }: { params: Params }) {
               </details>
               <details className="group px-5 py-1">
                 <summary className="flex min-h-[52px] cursor-pointer list-none items-center gap-3 text-sm font-medium text-ink">
-                  <CreditCard className="size-4 text-maleja" /> Formas de pago
+                  <CreditCard className="size-4 text-maleja-deep" /> Formas de pago
                   <ChevronRight className="ml-auto size-4 text-ink-soft transition-transform group-open:rotate-90" />
                 </summary>
                 <ul className="space-y-1 pb-4 text-sm text-ink-soft">
@@ -147,7 +147,7 @@ export default async function ProductPage({ params }: { params: Params }) {
             eyebrow="Completá tu look"
             title={
               <>
-                También te puede <span className="italic text-maleja">gustar</span>
+                También te puede <span className="italic text-maleja-deep">gustar</span>
               </>
             }
             href={product.category ? `/categoria/${product.category.slug}` : "/tienda"}

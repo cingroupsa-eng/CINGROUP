@@ -12,12 +12,20 @@ const config: Config = {
           hot: "#FF4F9A", // Rosa intenso — hover, gradientes
           pastel: "#FFB6D0", // Rosa pastel — fondos suaves, bordes
           canvas: "#FFF7FA", // Fondo base
+          // Tonos accesibles (AA ≥ 4,5:1) para TEXTO y fondos con texto blanco.
+          // El fucsia de marca #F00072 se mantiene para acentos, íconos y bordes.
+          deep: "#D60065",
+          dark: "#C8005E", // hover de botones con texto
         },
         ink: {
           DEFAULT: "#211820", // Texto principal
-          soft: "#8B7480", // Texto secundario
+          // Texto secundario: #8B7480 ajustado a #806B76 para cumplir AA (4,66:1 sobre el fondo base).
+          soft: "#806B76",
         },
-        ok: "#13B86A", // Confirmación / WhatsApp / stock
+        ok: {
+          DEFAULT: "#13B86A", // Confirmación: íconos, puntos de estado
+          deep: "#0C7D48", // Texto verde y botones con texto blanco (AA)
+        },
       },
       fontFamily: {
         serif: ["var(--font-serif)", "Georgia", "serif"],

@@ -96,12 +96,12 @@ export function SettingsForm({ settings }: { settings: StoreSettings }) {
           error={errors.whatsapp_number?.message}
         >
           <div className="relative">
-            <WhatsAppIcon className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-ok" />
+            <WhatsAppIcon className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-ok-deep" />
             <Input id="wa" type="tel" inputMode="tel" placeholder="595981123456" className="pl-11" invalid={!!errors.whatsapp_number} {...register("whatsapp_number")} />
           </div>
         </Field>
         {waNormalized && (
-          <p className="flex items-center gap-2 text-sm text-ok">
+          <p className="flex items-center gap-2 text-sm text-ok-deep">
             <CheckCircle2 className="size-4" /> Se usará: {prettyPhone(waNormalized)} ·{" "}
             <a href={`https://wa.me/${waNormalized}`} target="_blank" rel="noopener noreferrer" className="underline">
               probar enlace

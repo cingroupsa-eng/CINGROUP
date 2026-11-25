@@ -33,7 +33,7 @@ export function Footer({ settings, categories }: { settings: StoreSettings; cate
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="grid size-11 place-items-center rounded-full border border-white/15 text-white transition hover:border-maleja hover:bg-maleja"
+                  className="grid size-11 place-items-center rounded-full border border-white/15 text-white transition hover:border-maleja hover:bg-maleja-deep"
                 >
                   <Icon className="size-5" />
                 </a>
@@ -67,7 +67,7 @@ export function Footer({ settings, categories }: { settings: StoreSettings; cate
           <h2 className="eyebrow text-maleja-pastel">Atención</h2>
           <ul className="mt-4 space-y-4 text-sm">
             <li className="flex gap-3">
-              <WhatsAppIcon className="mt-0.5 size-4 shrink-0 text-ok" />
+              <WhatsAppIcon className="mt-0.5 size-4 shrink-0 text-ok-deep" />
               {settings.whatsapp_number ? (
                 <a href={waLink(settings.whatsapp_number)} target="_blank" rel="noopener noreferrer" className="hover:text-white">
                   {prettyPhone(settings.whatsapp_number)}

@@ -123,7 +123,7 @@ export function ProductGallery({ images, name, badges }: { images: ProductImage[
             type="button"
             onClick={() => setLightbox(true)}
             aria-label="Ampliar foto"
-            className="absolute right-3 top-3 z-10 grid size-11 place-items-center rounded-full bg-white/85 text-ink backdrop-blur transition hover:text-maleja lg:opacity-0 lg:group-hover:opacity-100"
+            className="absolute right-3 top-3 z-10 grid size-11 place-items-center rounded-full bg-white/85 text-ink backdrop-blur transition hover:text-maleja-deep lg:opacity-0 lg:group-hover:opacity-100"
           >
             <ZoomIn className="size-4" />
           </button>

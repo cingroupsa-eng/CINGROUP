@@ -60,7 +60,7 @@ export function AdminShell({
                   <span
                     className={cn(
                       "ml-auto grid h-5 min-w-5 place-items-center rounded-full px-1.5 text-[10px] font-semibold",
-                      "bg-maleja text-white"
+                      "bg-maleja-deep text-white"
                     )}
                   >
                     {pendingCount}
@@ -114,13 +114,13 @@ export function AdminShell({
                 aria-current={isActive(href, exact) ? "page" : undefined}
                 className={cn(
                   "relative flex min-h-[58px] flex-1 flex-col items-center justify-center gap-1 text-[10px] font-medium",
-                  isActive(href, exact) ? "text-maleja" : "text-ink-soft"
+                  isActive(href, exact) ? "text-maleja-deep" : "text-ink-soft"
                 )}
               >
                 <Icon className="size-5" strokeWidth={1.8} />
                 {label === "Configuración" ? "Ajustes" : label}
                 {href === "/admin/pedidos" && pendingCount > 0 && (
-                  <span className="absolute right-[calc(50%-18px)] top-2 grid h-4 min-w-4 place-items-center rounded-full bg-maleja px-1 text-[9px] font-semibold text-white">
+                  <span className="absolute right-[calc(50%-18px)] top-2 grid h-4 min-w-4 place-items-center rounded-full bg-maleja-deep px-1 text-[9px] font-semibold text-white">
                     {pendingCount}
                   </span>
                 )}

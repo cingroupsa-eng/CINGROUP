@@ -16,7 +16,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
       <div className="grid min-h-dvh place-items-center bg-maleja-canvas px-6">
         <div className="card-lux max-w-md p-8 text-center">
           <Isotype className="mx-auto size-14" />
-          <ShieldAlert className="mx-auto mt-6 size-8 text-maleja" />
+          <ShieldAlert className="mx-auto mt-6 size-8 text-maleja-deep" />
           <h1 className="mt-4 font-serif text-3xl">Acceso restringido</h1>
           <p className="mt-3 text-sm text-ink-soft">
             Tu usuario (<strong>{ctx.user.email}</strong>) inició sesión pero todavía no tiene rol de administrador. Pedí a la

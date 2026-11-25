@@ -17,7 +17,7 @@ export function Price({
       <span
         className={cn(
           "font-semibold tracking-tight",
-          off ? "text-maleja" : "text-ink",
+          off ? "text-maleja-deep" : "text-ink",
           { sm: "text-sm", md: "text-[15px]", lg: "text-2xl sm:text-[28px]" }[size]
         )}
       >
@@ -29,7 +29,7 @@ export function Price({
             {formatPYG(compareAt!)}
           </span>
           {size === "lg" && (
-            <span className="rounded-full bg-maleja px-2 py-0.5 text-xs font-semibold text-white">-{off}%</span>
+            <span className="rounded-full bg-maleja-deep px-2 py-0.5 text-xs font-semibold text-white">-{off}%</span>
           )}
         </>
       )}

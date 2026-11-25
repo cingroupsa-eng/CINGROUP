@@ -88,7 +88,7 @@ export function CartDrawer() {
             {items.length === 0 ? (
               <div className="flex flex-col items-center px-8 py-20 text-center">
                 <div className="relative grid size-24 place-items-center rounded-full bg-maleja-canvas">
-                  <ShoppingBag className="size-10 text-maleja" strokeWidth={1.3} />
+                  <ShoppingBag className="size-10 text-maleja-deep" strokeWidth={1.3} />
                   <span className="absolute -right-1 top-2 size-3 animate-floaty rounded-full bg-maleja-pastel" />
                 </div>
                 <p className="mt-6 font-serif text-3xl text-ink">Tu bolsa está vacía</p>
@@ -123,14 +123,14 @@ export function CartDrawer() {
                         </Link>
                         <div className="flex min-w-0 flex-1 flex-col">
                           <div className="flex items-start justify-between gap-2">
-                            <Link href={`/producto/${it.slug}`} onClick={onClose} className="font-serif text-lg leading-tight text-ink hover:text-maleja">
+                            <Link href={`/producto/${it.slug}`} onClick={onClose} className="font-serif text-lg leading-tight text-ink hover:text-maleja-deep">
                               {it.name}
                             </Link>
                             <button
                               type="button"
                               onClick={() => remove(it.key)}
                               aria-label={`Quitar ${it.name}`}
-                              className="-mr-2 -mt-2 grid size-11 shrink-0 place-items-center rounded-full text-ink-soft transition hover:bg-maleja-canvas hover:text-maleja"
+                              className="-mr-2 -mt-2 grid size-11 shrink-0 place-items-center rounded-full text-ink-soft transition hover:bg-maleja-canvas hover:text-maleja-deep"
                             >
                               <Trash2 className="size-4" />
                             </button>
@@ -148,7 +148,7 @@ export function CartDrawer() {
                                 type="button"
                                 onClick={() => setQty(it.key, it.quantity - 1)}
                                 aria-label="Restar uno"
-                                className="grid size-10 place-items-center rounded-full text-ink transition hover:text-maleja"
+                                className="grid size-10 place-items-center rounded-full text-ink transition hover:text-maleja-deep"
                               >
                                 <Minus className="size-3.5" />
                               </button>
@@ -158,7 +158,7 @@ export function CartDrawer() {
                                 onClick={() => setQty(it.key, it.quantity + 1)}
                                 disabled={it.quantity >= it.maxStock}
                                 aria-label="Sumar uno"
-                                className="grid size-10 place-items-center rounded-full text-ink transition hover:text-maleja disabled:opacity-30"
+                                className="grid size-10 place-items-center rounded-full text-ink transition hover:text-maleja-deep disabled:opacity-30"
                               >
                                 <Plus className="size-3.5" />
                               </button>
@@ -169,7 +169,7 @@ export function CartDrawer() {
                             </div>
                           </div>
                           {it.quantity >= it.maxStock && (
-                            <p className="mt-2 text-[11px] text-maleja">Máximo disponible: {it.maxStock}</p>
+                            <p className="mt-2 text-[11px] text-maleja-deep">Máximo disponible: {it.maxStock}</p>
                           )}
                         </div>
                       </div>

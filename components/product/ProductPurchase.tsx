@@ -152,7 +152,7 @@ export function ProductPurchase({ product, url }: { product: ProductWithRelation
                   active
                     ? "border-ink bg-ink text-white"
                     : available
-                      ? "border-maleja-pastel/70 bg-white text-ink hover:border-maleja hover:text-maleja"
+                      ? "border-maleja-pastel/70 bg-white text-ink hover:border-maleja hover:text-maleja-deep"
                       : "cursor-not-allowed border-dashed border-ink/15 bg-transparent text-ink-soft/50 line-through"
                 )}
               >
@@ -184,7 +184,7 @@ export function ProductPurchase({ product, url }: { product: ProductWithRelation
           </span>
         ) : variant ? (
           variant.stock > 0 ? (
-            <span className="inline-flex items-center gap-2 font-medium text-ok">
+            <span className="inline-flex items-center gap-2 font-medium text-ok-deep">
               <span className="relative flex size-2">
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-ok opacity-60" />
                 <span className="relative inline-flex size-2 rounded-full bg-ok" />
@@ -207,7 +207,7 @@ export function ProductPurchase({ product, url }: { product: ProductWithRelation
             onClick={() => setQty(Math.max(1, qty - 1))}
             disabled={qty <= 1}
             aria-label="Restar cantidad"
-            className="grid h-[52px] w-12 place-items-center rounded-full text-ink transition hover:text-maleja disabled:opacity-30"
+            className="grid h-[52px] w-12 place-items-center rounded-full text-ink transition hover:text-maleja-deep disabled:opacity-30"
           >
             <Minus className="size-4" />
           </button>
@@ -219,7 +219,7 @@ export function ProductPurchase({ product, url }: { product: ProductWithRelation
             onClick={() => setQty(Math.min(stock || 1, qty + 1))}
             disabled={!variant || qty >= stock}
             aria-label="Sumar cantidad"
-            className="grid h-[52px] w-12 place-items-center rounded-full text-ink transition hover:text-maleja disabled:opacity-30"
+            className="grid h-[52px] w-12 place-items-center rounded-full text-ink transition hover:text-maleja-deep disabled:opacity-30"
           >
             <Plus className="size-4" />
           </button>
@@ -238,7 +238,7 @@ export function ProductPurchase({ product, url }: { product: ProductWithRelation
       </div>
 
       {error && (
-        <motion.p id="purchase-error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} role="alert" className="text-sm font-medium text-maleja">
+        <motion.p id="purchase-error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} role="alert" className="text-sm font-medium text-maleja-deep">
           {error}
         </motion.p>
       )}
@@ -248,7 +248,7 @@ export function ProductPurchase({ product, url }: { product: ProductWithRelation
           href={waLink(settings.whatsapp_number, consultText)}
           target="_blank"
           rel="noopener noreferrer"
-          className={buttonStyles("outline", "lg", "w-full !border-ok/30 !text-ok hover:!border-ok hover:!bg-ok/5")}
+          className={buttonStyles("outline", "lg", "w-full !border-ok/30 !text-ok-deep hover:!border-ok hover:!bg-ok/5")}
         >
           <WhatsAppIcon className="size-5" /> Consultar por WhatsApp
         </a>

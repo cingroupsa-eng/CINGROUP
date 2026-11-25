@@ -164,7 +164,7 @@ export function CatalogFilters({ options, total }: { options: Options; total: nu
           >
             <SlidersHorizontal className="size-4" /> Filtrar
             {activeCount > 0 && (
-              <span className="grid h-5 min-w-5 place-items-center rounded-full bg-maleja px-1 text-[10px] text-white">{activeCount}</span>
+              <span className="grid h-5 min-w-5 place-items-center rounded-full bg-maleja-deep px-1 text-[10px] text-white">{activeCount}</span>
             )}
           </button>
           <Select
@@ -217,7 +217,7 @@ export function CatalogFilters({ options, total }: { options: Options; total: nu
             </span>
           )}
           {activeCount > 0 && (
-            <button type="button" onClick={clear} className="min-h-[32px] px-2 text-xs font-medium text-maleja underline-offset-4 hover:underline">
+            <button type="button" onClick={clear} className="min-h-[32px] px-2 text-xs font-medium text-maleja-deep underline-offset-4 hover:underline">
               Limpiar filtros
             </button>
           )}

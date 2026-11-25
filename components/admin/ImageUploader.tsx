@@ -88,9 +88,9 @@ export function ImageUploader({
         )}
       >
         {uploading > 0 ? (
-          <Loader2 className="size-8 animate-spin text-maleja" />
+          <Loader2 className="size-8 animate-spin text-maleja-deep" />
         ) : (
-          <UploadCloud className="size-8 text-maleja" strokeWidth={1.5} />
+          <UploadCloud className="size-8 text-maleja-deep" strokeWidth={1.5} />
         )}
         <p className="mt-3 text-sm font-medium text-ink">
           {uploading > 0 ? `Subiendo ${uploading} foto(s)…` : "Arrastrá tus fotos aquí o tocá para elegirlas"}
@@ -124,7 +124,7 @@ export function ImageUploader({
                 <div className="relative aspect-[3/4]">
                   <Image src={img.url} alt={img.alt_text || ""} fill sizes="200px" className="object-cover" />
                   {i === 0 && (
-                    <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-maleja px-2 py-0.5 text-[10px] font-semibold text-white">
+                    <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-maleja-deep px-2 py-0.5 text-[10px] font-semibold text-white">
                       <Star className="size-3 fill-white" /> Portada
                     </span>
                   )}
@@ -157,7 +157,7 @@ export function ImageUploader({
               <button
                 type="button"
                 onClick={() => inputRef.current?.click()}
-                className="grid aspect-[3/4] w-full place-items-center rounded-2xl border-2 border-dashed border-maleja-pastel/70 text-maleja transition hover:border-maleja hover:bg-maleja-canvas"
+                className="grid aspect-[3/4] w-full place-items-center rounded-2xl border-2 border-dashed border-maleja-pastel/70 text-maleja-deep transition hover:border-maleja hover:bg-maleja-canvas"
               >
                 <ImagePlus className="size-6" />
               </button>
@@ -220,18 +220,18 @@ export function SingleImageUpload({
         {value ? (
           <Image src={value} alt="" fill sizes="128px" className="object-cover" />
         ) : (
-          <span className="absolute inset-0 grid place-items-center text-maleja">
+          <span className="absolute inset-0 grid place-items-center text-maleja-deep">
             {loading ? <Loader2 className="size-6 animate-spin" /> : <ImagePlus className="size-6" />}
           </span>
         )}
         {loading && value && (
           <span className="absolute inset-0 grid place-items-center bg-white/70">
-            <Loader2 className="size-6 animate-spin text-maleja" />
+            <Loader2 className="size-6 animate-spin text-maleja-deep" />
           </span>
         )}
       </button>
       <div className="space-y-2 pt-1">
-        <button type="button" onClick={() => ref.current?.click()} className="min-h-[40px] rounded-full bg-maleja-canvas px-4 text-sm font-medium text-maleja ring-1 ring-maleja-pastel/60">
+        <button type="button" onClick={() => ref.current?.click()} className="min-h-[40px] rounded-full bg-maleja-canvas px-4 text-sm font-medium text-maleja-deep ring-1 ring-maleja-pastel/60">
           {value ? "Cambiar" : label}
         </button>
         {value && (

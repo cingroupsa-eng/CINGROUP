@@ -157,7 +157,7 @@ export function CategoriesManager({ categories: initial, brands }: { categories:
                   });
                 }}
               />
-              <button type="button" onClick={() => setEditing(c)} aria-label={`Editar ${c.name}`} className="grid size-11 place-items-center rounded-full hover:bg-maleja-canvas hover:text-maleja">
+              <button type="button" onClick={() => setEditing(c)} aria-label={`Editar ${c.name}`} className="grid size-11 place-items-center rounded-full hover:bg-maleja-canvas hover:text-maleja-deep">
                 <Pencil className="size-4" />
               </button>
               <button

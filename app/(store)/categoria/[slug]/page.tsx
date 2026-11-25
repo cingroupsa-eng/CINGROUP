@@ -26,7 +26,7 @@ export default async function CategoryPage({ params, searchParams }: { params: P
   return (
     <CatalogView
       eyebrow="Categoría"
-      title={cat.slug === "ofertas" ? <span className="italic text-maleja">{cat.name}</span> : cat.name}
+      title={cat.slug === "ofertas" ? <span className="italic text-maleja-deep">{cat.name}</span> : cat.name}
       description={cat.description}
       categorySlug={cat.slug}
       categories={categories}

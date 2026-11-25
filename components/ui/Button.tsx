@@ -13,12 +13,12 @@ export const buttonStyles = (variant: Variant = "primary", size: Size = "md", cl
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-maleja/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white",
     "disabled:pointer-events-none disabled:opacity-50",
     {
-      primary: "bg-maleja text-white shadow-sm hover:bg-maleja-hot",
-      dark: "bg-ink text-white hover:bg-maleja",
-      outline: "border border-ink/15 bg-white text-ink hover:border-maleja hover:text-maleja",
-      ghost: "text-ink hover:bg-maleja-canvas hover:text-maleja",
-      soft: "bg-maleja-canvas text-maleja ring-1 ring-maleja-pastel/50 hover:bg-maleja-pastel/30",
-      whatsapp: "bg-ok text-white shadow-sm hover:brightness-110",
+      primary: "bg-maleja-deep text-white shadow-sm hover:bg-maleja-dark",
+      dark: "bg-ink text-white hover:bg-maleja-deep",
+      outline: "border border-ink/15 bg-white text-ink hover:border-maleja hover:text-maleja-deep",
+      ghost: "text-ink hover:bg-maleja-canvas hover:text-maleja-deep",
+      soft: "bg-maleja-canvas text-maleja-deep ring-1 ring-maleja-pastel/50 hover:bg-maleja-pastel/30",
+      whatsapp: "bg-ok-deep text-white shadow-sm hover:brightness-90",
       danger: "bg-white text-red-600 ring-1 ring-red-200 hover:bg-red-50",
     }[variant],
     {

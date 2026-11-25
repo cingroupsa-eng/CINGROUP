@@ -51,7 +51,7 @@ export function Field({
         <label htmlFor={htmlFor} className="block text-[13px] font-medium text-ink">
           {label}
           {required && (
-            <span aria-hidden className="ml-0.5 text-maleja">
+            <span aria-hidden className="ml-0.5 text-maleja-deep">
               *
             </span>
           )}

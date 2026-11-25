@@ -55,9 +55,9 @@ export function ProductCard({ product, index = 0, priority }: { product: Product
           )}
 
           <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
-            {off && <span className="rounded-full bg-maleja px-2.5 py-1 text-[10.5px] font-semibold tracking-wide text-white">-{off}%</span>}
+            {off && <span className="rounded-full bg-maleja-deep px-2.5 py-1 text-[10.5px] font-semibold tracking-wide text-white">-{off}%</span>}
             {!off && product.is_on_sale && (
-              <span className="rounded-full bg-maleja px-2.5 py-1 text-[10.5px] font-semibold tracking-wide text-white">Oferta</span>
+              <span className="rounded-full bg-maleja-deep px-2.5 py-1 text-[10.5px] font-semibold tracking-wide text-white">Oferta</span>
             )}
             {product.is_new && (
               <span className="rounded-full bg-white/90 px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-ink backdrop-blur">
@@ -91,7 +91,7 @@ export function ProductCard({ product, index = 0, priority }: { product: Product
               </div>
             )}
           </div>
-          <h3 className="mt-1 line-clamp-2 font-serif text-[19px] leading-snug text-ink transition-colors group-hover:text-maleja sm:text-xl">
+          <h3 className="mt-1 line-clamp-2 font-serif text-[19px] leading-snug text-ink transition-colors group-hover:text-maleja-deep sm:text-xl">
             {product.name}
           </h3>
           <Price price={product.price_pyg} compareAt={product.compare_at_price_pyg} className="mt-1" />

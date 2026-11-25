@@ -41,7 +41,7 @@ export function Hero({ settings }: { settings: StoreSettings }) {
               <>
                 Tu estilo,
                 <br />
-                <span className="relative inline-block italic text-maleja">
+                <span className="relative inline-block italic text-maleja-deep">
                   tu esencia.
                   <motion.svg
                     viewBox="0 0 300 20"
@@ -132,7 +132,7 @@ export function Hero({ settings }: { settings: StoreSettings }) {
             id="hero"
             text="Tu estilo · Tu esencia · Maleja · "
             className="absolute -left-1 top-[6%] size-24 rounded-full bg-white/80 text-ink shadow-card backdrop-blur sm:left-0 sm:size-32"
-            center={<span className="font-serif text-3xl italic text-maleja">M</span>}
+            center={<span className="font-serif text-3xl italic text-maleja-deep">M</span>}
           />
 
           <motion.div
@@ -141,7 +141,7 @@ export function Hero({ settings }: { settings: StoreSettings }) {
             transition={{ duration: 0.8, delay: 0.8, ease }}
             className="absolute -right-1 bottom-[12%] hidden items-center sm:flex gap-3 rounded-2xl bg-white/90 p-3 pr-5 shadow-card ring-1 ring-maleja-pastel/40 backdrop-blur sm:right-0"
           >
-            <span className="grid size-10 place-items-center rounded-full bg-ok/10 text-ok">
+            <span className="grid size-10 place-items-center rounded-full bg-ok/10 text-ok-deep">
               <WhatsAppIcon className="size-5" />
             </span>
             <span className="text-left">

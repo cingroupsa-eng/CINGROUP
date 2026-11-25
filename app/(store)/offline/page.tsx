@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: "Sin conexión", robots: { index: fal
 export default function OfflinePage() {
   return (
     <div className="container-lux flex flex-col items-center py-24 text-center">
-      <span className="grid size-20 place-items-center rounded-full bg-white text-maleja shadow-card">
+      <span className="grid size-20 place-items-center rounded-full bg-white text-maleja-deep shadow-card">
         <WifiOff className="size-8" strokeWidth={1.5} />
       </span>
       <h1 className="heading-lg mt-8">Sin conexión</h1>

@@ -18,7 +18,7 @@
     text-rendering: optimizeLegibility;
   }
   ::selection {
-    @apply bg-maleja text-white;
+    @apply bg-maleja-deep text-white;
   }
   h1, h2, h3, h4, .font-serif {
     font-optical-sizing: auto;
@@ -48,7 +48,7 @@
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10;
   }
   .eyebrow {
-    @apply font-sans text-[11px] font-medium uppercase tracking-luxe text-maleja;
+    @apply font-sans text-[11px] font-medium uppercase tracking-luxe text-maleja-deep;
   }
   .heading-xl {
     @apply font-serif text-[40px] font-medium leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl;

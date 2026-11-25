@@ -176,7 +176,7 @@ export function ProductForm({
     <form onSubmit={handleSubmit(onSubmit, onInvalid)} noValidate className="mx-auto max-w-6xl">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <Link href="/admin/productos" aria-label="Volver" className="grid size-11 place-items-center rounded-full bg-white ring-1 ring-maleja-pastel/40 hover:text-maleja">
+          <Link href="/admin/productos" aria-label="Volver" className="grid size-11 place-items-center rounded-full bg-white ring-1 ring-maleja-pastel/40 hover:text-maleja-deep">
             <ArrowLeft className="size-4" />
           </Link>
           <div>
@@ -238,7 +238,7 @@ export function ProductForm({
 
           <Card title="Tallas, colores y stock" description="Cada combinación talla + color tiene su propio stock. Sin stock = no se puede pedir.">
             <div className="rounded-2xl bg-maleja-canvas p-4">
-              <button type="button" onClick={() => setShowBulk((s) => !s)} aria-expanded={showBulk} aria-controls="bulk-panel" className="flex min-h-[40px] w-full items-center gap-2 text-left text-sm font-medium text-maleja">
+              <button type="button" onClick={() => setShowBulk((s) => !s)} aria-expanded={showBulk} aria-controls="bulk-panel" className="flex min-h-[40px] w-full items-center gap-2 text-left text-sm font-medium text-maleja-deep">
                 <Wand2 className="size-4" /> Carga rápida: un color con varias tallas
               </button>
               <AnimatePresence initial={false}>
@@ -425,11 +425,11 @@ export function ProductForm({
               {price > 0 && (
                 <div className="rounded-2xl bg-maleja-canvas p-3 text-sm">
                   <span className="text-ink-soft">Así se verá: </span>
-                  <strong className={off ? "text-maleja" : "text-ink"}>{formatPYG(price)}</strong>
+                  <strong className={off ? "text-maleja-deep" : "text-ink"}>{formatPYG(price)}</strong>
                   {off && (
                     <>
                       <span className="ml-2 text-ink-soft line-through">{formatPYG(compareAt)}</span>
-                      <span className="ml-2 rounded-full bg-maleja px-2 py-0.5 text-xs font-semibold text-white">-{off}%</span>
+                      <span className="ml-2 rounded-full bg-maleja-deep px-2 py-0.5 text-xs font-semibold text-white">-{off}%</span>
                     </>
                   )}
                 </div>
@@ -449,7 +449,7 @@ export function ProductForm({
                   ))}
                 </Select>
               </Field>
-              <Field label="Marca (opcional)" htmlFor="brand" hint={<Link href="/admin/categorias#marcas" className="text-maleja">Gestionar marcas</Link>}>
+              <Field label="Marca (opcional)" htmlFor="brand" hint={<Link href="/admin/categorias#marcas" className="text-maleja-deep">Gestionar marcas</Link>}>
                 <Select id="brand" {...register("brand_id")}>
                   <option value="">Sin marca</option>
                   {brands.map((b) => (

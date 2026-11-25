@@ -63,7 +63,7 @@ export default async function DashboardPage() {
             {pending > 0 ? (
               <>
                 Tenés{" "}
-                <Link href="/admin/pedidos?estado=pendiente" className="font-semibold text-maleja underline-offset-4 hover:underline">
+                <Link href="/admin/pedidos?estado=pendiente" className="font-semibold text-maleja-deep underline-offset-4 hover:underline">
                   {pending} {pending === 1 ? "pedido por atender" : "pedidos por atender"}
                 </Link>
               </>
@@ -104,14 +104,14 @@ export default async function DashboardPage() {
             <h2 id="queue-title" className="font-serif text-2xl text-ink">
               Por atender
             </h2>
-            <Link href="/admin/pedidos" className="text-sm font-medium text-ink-soft hover:text-maleja">
+            <Link href="/admin/pedidos" className="text-sm font-medium text-ink-soft hover:text-maleja-deep">
               Todos los pedidos
             </Link>
           </div>
 
           {queue.length === 0 ? (
             <div className="flex items-center gap-3 rounded-2xl border border-maleja-pastel/50 bg-white px-5 py-6 text-sm text-ink-soft">
-              <span aria-hidden className="grid size-8 place-items-center rounded-full bg-ok/10 text-ok">
+              <span aria-hidden className="grid size-8 place-items-center rounded-full bg-ok/10 text-ok-deep">
                 <Check className="size-4" />
               </span>
               Todo al día. Cuando una clienta envíe un pedido aparecerá aquí, el más antiguo primero.
@@ -127,7 +127,7 @@ export default async function DashboardPage() {
                         <OrderTag number={o.order_number} />
                         <span className="text-xs text-ink-soft">{timeAgo(o.created_at)}</span>
                       </div>
-                      <p className="mt-1.5 truncate font-medium text-ink group-hover:text-maleja">{o.customer_name}</p>
+                      <p className="mt-1.5 truncate font-medium text-ink group-hover:text-maleja-deep">{o.customer_name}</p>
                       <p className="text-xs text-ink-soft">
                         {units} {units === 1 ? "prenda" : "prendas"} · {PAYMENT_LABEL[o.payment_method]} ·{" "}
                         <span className="font-semibold tabular-nums text-ink">{formatPYG(o.total_pyg)}</span>
@@ -138,7 +138,7 @@ export default async function DashboardPage() {
                         href={waLink(o.customer_phone, buildCustomerMessage(o.customer_name, o.order_number, "Pendiente de confirmación", businessName))}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={buttonStyles("outline", "sm", "flex-1 border-ok/40 text-ok hover:border-ok hover:text-ok sm:flex-none")}
+                        className={buttonStyles("outline", "sm", "flex-1 border-ok/40 text-ok-deep hover:border-ok hover:text-ok-deep sm:flex-none")}
                       >
                         <WhatsAppIcon className="size-4" /> Escribir
                       </a>
@@ -152,7 +152,7 @@ export default async function DashboardPage() {
             </ul>
           )}
           {pending > queue.length && (
-            <Link href="/admin/pedidos?estado=pendiente" className="mt-3 inline-flex min-h-[44px] items-center text-sm font-medium text-maleja">
+            <Link href="/admin/pedidos?estado=pendiente" className="mt-3 inline-flex min-h-[44px] items-center text-sm font-medium text-maleja-deep">
               Ver {pending - queue.length} pendientes más
             </Link>
           )}
@@ -185,14 +185,14 @@ export default async function DashboardPage() {
                   <li key={t.label}>
                     {t.done ? (
                       <span className="flex min-h-[40px] items-center gap-3 px-1 text-sm text-ink-soft line-through decoration-ink/20">
-                        <Check aria-hidden className="size-4 text-ok" />
+                        <Check aria-hidden className="size-4 text-ok-deep" />
                         <span>
                           <span className="sr-only">Completado: </span>
                           {t.label}
                         </span>
                       </span>
                     ) : (
-                      <Link href={t.href} className="group flex min-h-[40px] items-center gap-3 rounded-xl px-1 text-sm text-ink hover:text-maleja">
+                      <Link href={t.href} className="group flex min-h-[40px] items-center gap-3 rounded-xl px-1 text-sm text-ink hover:text-maleja-deep">
                         <span aria-hidden className={cn("size-4 rounded-full border-[1.5px]", t.critical ? "border-amber-500" : "border-ink/25")} />
                         <span className="flex-1">{t.label}</span>
                         <ChevronRight aria-hidden className="size-4 text-ink-soft transition-transform duration-200 group-hover:translate-x-0.5" />

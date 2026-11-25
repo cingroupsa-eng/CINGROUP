@@ -19,7 +19,7 @@ export function WhatsAppFloat() {
       initial={{ opacity: 0, transform: "scale(0.8)" }}
       animate={{ opacity: 1, transform: "scale(1)" }}
       transition={{ delay: 1, duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
-      className="fixed bottom-[calc(76px+env(safe-area-inset-bottom))] right-4 z-float flex h-14 items-center gap-2 rounded-full bg-ok px-4 text-white shadow-lg transition-[transform,filter] duration-press ease-lux hover:brightness-110 active:scale-[0.95] lg:bottom-8 lg:right-8"
+      className="fixed bottom-[calc(76px+env(safe-area-inset-bottom))] right-4 z-float flex h-14 items-center gap-2 rounded-full bg-ok-deep px-4 text-white shadow-lg transition-[transform,filter] duration-press ease-lux hover:brightness-90 active:scale-[0.95] lg:bottom-8 lg:right-8"
     >
       {/* Pulso de atención: sólo 3 veces, no en bucle infinito. */}
       <span aria-hidden className="absolute inset-0 -z-10 animate-ping rounded-full bg-ok/30 [animation-duration:2.4s] [animation-iteration-count:3]" />

@@ -100,7 +100,7 @@ export function CheckoutForm({ onSuccess, onBack }: { onSuccess: (s: CheckoutSuc
           </span>
           <span className="text-xl font-semibold tabular-nums">{formatPYG(total)}</span>
         </div>
-        <button type="button" onClick={onBack} className="mt-1 text-xs font-medium text-maleja underline-offset-4 hover:underline">
+        <button type="button" onClick={onBack} className="mt-1 text-xs font-medium text-maleja-deep underline-offset-4 hover:underline">
           Editar bolsa
         </button>
       </div>
@@ -137,7 +137,7 @@ export function CheckoutForm({ onSuccess, onBack }: { onSuccess: (s: CheckoutSuc
 
       <fieldset className="space-y-3" aria-describedby={errors.paymentMethod ? "payment-error" : undefined}>
         <legend className="eyebrow mb-3">
-          Método de pago <span className="text-maleja">*</span>
+          Método de pago <span className="text-maleja-deep">*</span>
         </legend>
         <div className="grid gap-3">
           {methods.map((m) => {
@@ -154,7 +154,7 @@ export function CheckoutForm({ onSuccess, onBack }: { onSuccess: (s: CheckoutSuc
                 )}
               >
                 <input type="radio" value={m.id} className="sr-only" {...register("paymentMethod")} />
-                <span aria-hidden className={cn("grid size-10 shrink-0 place-items-center rounded-full", active ? "bg-maleja text-white" : "bg-maleja-canvas text-maleja")}>
+                <span aria-hidden className={cn("grid size-10 shrink-0 place-items-center rounded-full", active ? "bg-maleja-deep text-white" : "bg-maleja-canvas text-maleja-deep")}>
                   <Icon className="size-5" strokeWidth={1.6} />
                 </span>
                 <span className="flex-1">
@@ -165,7 +165,7 @@ export function CheckoutForm({ onSuccess, onBack }: { onSuccess: (s: CheckoutSuc
                 </span>
                 <span
                   aria-hidden
-                  className={cn("grid size-5 shrink-0 place-items-center rounded-full border transition-colors", active ? "border-maleja bg-maleja text-white" : "border-ink/20")}
+                  className={cn("grid size-5 shrink-0 place-items-center rounded-full border transition-colors", active ? "border-maleja bg-maleja-deep text-white" : "border-ink/20")}
                 >
                   {active && <Check className="size-3" strokeWidth={3} />}
                 </span>

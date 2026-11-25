@@ -14,7 +14,7 @@ export function Benefits() {
       {items.map(({ Icon, title, text }, i) => (
         <Reveal key={title} delay={i * 0.07}>
           <div className="group flex h-full gap-4 rounded-3xl border border-maleja-pastel/40 bg-white p-5 transition-[transform,box-shadow] duration-300 ease-lux hover:-translate-y-1 hover:shadow-soft lg:flex-col lg:p-7">
-            <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-maleja-canvas text-maleja transition-colors duration-300 group-hover:bg-maleja group-hover:text-white">
+            <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-maleja-canvas text-maleja-deep transition-colors duration-300 group-hover:bg-maleja-deep group-hover:text-white">
               <Icon className="size-5" strokeWidth={1.6} />
             </span>
             <div>

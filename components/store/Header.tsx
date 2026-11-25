@@ -21,7 +21,7 @@ export function CartButton({ className }: { className?: string }) {
       aria-expanded={isOpen}
       aria-label={`Abrir bolsa de compras${count ? `, ${count} artículos` : ""}`}
       className={cn(
-        "relative grid size-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja",
+        "relative grid size-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja-deep",
         className
       )}
     >
@@ -36,7 +36,7 @@ export function CartButton({ className }: { className?: string }) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.6, transition: { duration: 0.12 } }}
             transition={{ type: "spring", duration: 0.35, bounce: 0.3 }}
-            className="absolute right-0.5 top-0.5 grid h-[19px] min-w-[19px] place-items-center rounded-full bg-maleja px-1 text-[10px] font-semibold text-white ring-2 ring-white"
+            className="absolute right-0.5 top-0.5 grid h-[19px] min-w-[19px] place-items-center rounded-full bg-maleja-deep px-1 text-[10px] font-semibold text-white ring-2 ring-white"
           >
             {count > 99 ? "99+" : count}
           </motion.span>
@@ -89,18 +89,18 @@ export function Header() {
               aria-label="Abrir menú"
               aria-haspopup="dialog"
               aria-expanded={menuOpen}
-              className="grid size-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja lg:hidden"
+              className="grid size-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja-deep lg:hidden"
             >
               <Menu className="size-[22px]" strokeWidth={1.6} />
             </button>
             <nav className="hidden items-center gap-7 text-[13px] font-medium uppercase tracking-[0.16em] lg:flex">
-              <Link href="/tienda" className={cn("link-underline py-2", pathname === "/tienda" && "text-maleja")}>
+              <Link href="/tienda" className={cn("link-underline py-2", pathname === "/tienda" && "text-maleja-deep")}>
                 Tienda
               </Link>
               <Link href="/tienda?orden=recientes" className="link-underline py-2">
                 Novedades
               </Link>
-              <Link href="/categoria/ofertas" className="link-underline py-2 text-maleja">
+              <Link href="/categoria/ofertas" className="link-underline py-2 text-maleja-deep">
                 Ofertas
               </Link>
             </nav>
@@ -122,7 +122,7 @@ export function Header() {
               aria-label="Buscar productos"
               aria-haspopup="dialog"
               aria-expanded={searchOpen}
-              className="grid size-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja"
+              className="grid size-11 place-items-center rounded-full text-ink transition hover:bg-maleja-canvas hover:text-maleja-deep"
             >
               <Search className="size-[21px]" strokeWidth={1.6} />
             </button>
@@ -132,7 +132,7 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Escribinos por WhatsApp"
-                className="hidden size-11 place-items-center rounded-full text-ok transition hover:bg-ok/10 sm:grid"
+                className="hidden size-11 place-items-center rounded-full text-ok-deep transition hover:bg-ok/10 sm:grid"
               >
                 <WhatsAppIcon className="size-[21px]" />
               </a>
@@ -154,8 +154,8 @@ export function Header() {
                     href={`/categoria/${c.slug}`}
                     className={cn(
                       "link-underline whitespace-nowrap py-2 transition-colors hover:text-ink",
-                      active && "text-maleja",
-                      c.slug === "ofertas" && "text-maleja"
+                      active && "text-maleja-deep",
+                      c.slug === "ofertas" && "text-maleja-deep"
                     )}
                   >
                     {c.name}

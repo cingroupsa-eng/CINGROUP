@@ -43,7 +43,7 @@ export function EmptyCollection({ compact = false, title, subtitle }: { compact?
           <RotatingBadge
             id="empty"
             text="Próximamente · Nueva colección · "
-            className="size-44 text-maleja sm:size-52"
+            className="size-44 text-maleja-deep sm:size-52"
             center={
               <svg viewBox="0 0 100 100" className="size-20 sm:size-24" aria-hidden>
                 <MonogramPaths color="#211820" />
@@ -71,7 +71,7 @@ export function EmptyCollection({ compact = false, title, subtitle }: { compact?
           >
             {title ?? (
               <>
-                Próximamente <span className="italic text-maleja">nuevas colecciones</span>
+                Próximamente <span className="italic text-maleja-deep">nuevas colecciones</span>
               </>
             )}
           </motion.h2>
@@ -127,7 +127,7 @@ export function EmptyCollection({ compact = false, title, subtitle }: { compact?
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="grid size-11 place-items-center rounded-full border border-maleja-pastel/60 text-ink transition hover:border-maleja hover:bg-maleja hover:text-white"
+                  className="grid size-11 place-items-center rounded-full border border-maleja-pastel/60 text-ink transition hover:border-maleja hover:bg-maleja-deep hover:text-white"
                 >
                   <Icon className="size-5" />
                 </a>
